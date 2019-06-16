@@ -1,5 +1,5 @@
-com\koublis\entities\Wine.class
 com\koublis\controller\WineController.class
+com\koublis\entities\Wine.class
 com\koublis\repository\WineRepositoryTest.class
 com\koublis\repository\WineRepository.class
 com\koublis\Application.class

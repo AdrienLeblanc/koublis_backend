@@ -1,21 +1,30 @@
 package com.koublis.controller;
 
 import com.koublis.entities.Wine;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.koublis.repository.WineRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 
 @RestController
 public class WineController {
 
-    private static final String template = "%s";
-    private final AtomicLong counter = new AtomicLong();
+    @Autowired
+    private WineRepository wineRepository;
 
-    @RequestMapping("/greeting")
-    public Wine addWine(@RequestParam(value="name", defaultValue="appellation") String name) {
-        return new Wine(counter.incrementAndGet(),
-                String.format(template, name));
+    @GetMapping("/wines")
+    public List<Wine> findAllWines() {
+        return wineRepository.findAll();
+    }
+
+    @GetMapping("/wine")
+    public Wine findById(@RequestParam(value="id") long id) {
+        return wineRepository.findById(id);
+    }
+
+    @PostMapping("/addWine")
+    void addUser(@RequestBody Wine wine) {
+        wineRepository.save(wine);
     }
 }
