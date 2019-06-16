@@ -28,6 +28,7 @@ public class Application extends SpringBootServletInitializer {
     }
 
     private static Class<Application> applicationClass = Application.class;
+
     @Bean
     public CommandLineRunner init(WineRepository wineRepository) {
         return args -> {
