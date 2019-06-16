@@ -8,23 +8,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class WineController {
 
     @Autowired
     private WineRepository wineRepository;
 
     @GetMapping("/wines")
-    public List<Wine> findAllWines() {
+    public List<Wine> findAll() {
         return wineRepository.findAll();
     }
 
-    @GetMapping("/wine")
-    public Wine findById(@RequestParam(value="id") long id) {
-        return wineRepository.findById(id);
-    }
-
     @PostMapping("/addWine")
-    void addUser(@RequestBody Wine wine) {
+    void addWine(@RequestBody Wine wine) {
         wineRepository.save(wine);
     }
 }
