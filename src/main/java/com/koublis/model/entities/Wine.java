@@ -1,6 +1,8 @@
 package com.koublis.model.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,41 +12,23 @@ public class Wine implements Serializable {
 
     @Id
     private Long wine_id;
-
     private String wine;
-
     private String wine_slug;
-
     private String appellation;
-
     private String appellation_slug;
-
     private String color;
-
     private String wine_type;
-
     private String[] regions;
-
     private String country;
-
     private String classification;
-
     private String vintage;
-
     private Date date;
-
     private Boolean is_primeurs;
-
     private Long score;
-
     private String confidence_index;
-
     private Long journalist_count;
-
     private Long lwin;
-
     private Long lwin_11;
-
 
     public Wine() {
     }
