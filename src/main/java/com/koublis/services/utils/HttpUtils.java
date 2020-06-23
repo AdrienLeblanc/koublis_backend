@@ -1,4 +1,4 @@
-package com.koublis.controller.services.servicesUtils;
+package com.koublis.services.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.MultiValueMap;

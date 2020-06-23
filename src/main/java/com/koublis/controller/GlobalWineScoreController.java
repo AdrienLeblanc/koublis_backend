@@ -1,6 +1,6 @@
-package com.koublis.controller.services;
+package com.koublis.controller;
 
-import com.koublis.controller.services.servicesUtils.HttpUtils;
+import com.koublis.services.utils.HttpUtils;
 import com.koublis.converters.WineConverter;
 import com.koublis.model.dto.globalwinescore.LatestResults;
 import com.koublis.model.dto.globalwinescore.WineDto;
@@ -8,7 +8,6 @@ import com.koublis.model.entities.Wine;
 import com.koublis.repository.WineRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,13 +19,13 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-public class GlobalWineScoreService {
+public class GlobalWineScoreController {
 
     @Autowired
     private WineRepository wineRepository;
 
     private static final String token = "d84bed838c7eedc086973876a7de117ab2dd91fa";
-    private final Logger logger = Logger.getLogger(GlobalWineScoreService.class);
+    private final Logger logger = Logger.getLogger(GlobalWineScoreController.class);
 
     @PostMapping("/wines/update")
     public void update() {

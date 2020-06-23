@@ -1,4 +1,4 @@
-package com.koublis.controller.crud;
+package com.koublis.controller;
 
 import com.koublis.exception.ResourceNotFoundException;
 import com.koublis.model.entities.Wine;
