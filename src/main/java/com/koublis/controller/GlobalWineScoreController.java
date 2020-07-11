@@ -1,11 +1,11 @@
 package com.koublis.controller;
 
-import com.koublis.services.utils.HttpUtils;
 import com.koublis.converters.WineConverter;
 import com.koublis.model.dto.globalwinescore.LatestResults;
 import com.koublis.model.dto.globalwinescore.WineDto;
 import com.koublis.model.entities.Wine;
 import com.koublis.repository.WineRepository;
+import com.koublis.services.utils.HttpUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
