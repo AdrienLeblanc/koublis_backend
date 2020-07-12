@@ -43,10 +43,10 @@ public class GlobalWineScoreController {
     public String update() {
 
         Runnable runnable = () -> {
-            AtomicBoolean sendRequest = new AtomicBoolean(true);
-            AtomicReference<String> limitOffset = new AtomicReference<>(winesToSave.size() == 0 ? "" : "?limit=100&offset=" + winesToSave.size());
+            boolean sendRequest = true;
+            String limitOffset = winesToSave.size() == 0 ? "" : "?limit=100&offset=" + winesToSave.size();
 
-            while (sendRequest.get()) {
+            while (sendRequest) {
                 WebClient.RequestHeadersSpec<?> requestGetLatestWines = webClientService
                         .globalWineService.get()
                         .uri("/globalwinescores/latest/" + limitOffset);
@@ -60,13 +60,13 @@ public class GlobalWineScoreController {
                     }
                 } else if (clientResponse.statusCode().is5xxServerError()) {
                     logger.warn("GlobalWineScore Server Error");
-                    sendRequest.set(false);
+                    sendRequest = false;
                 } else if (clientResponse.statusCode().is4xxClientError()) {
                     logger.warn("Client error");
-                    sendRequest.set(false);
+                    sendRequest = false;
                 } else if (clientResponse.statusCode().isError()) {
                     logger.warn("Parsing error");
-                    sendRequest.set(false);
+                    sendRequest = false;
                 } else {
                     LatestResults latestResults = clientResponse
                             .bodyToMono(LatestResults.class)
@@ -78,7 +78,7 @@ public class GlobalWineScoreController {
 
                     // Check if another request is needed
                     if (latestResults.next == null || winesToSave.size() >= latestResults.count) {
-                        sendRequest.set(false);
+                        sendRequest = false;
                         winesToSave.clear();
                     } else {
                         // additional limit/offset for next request
@@ -86,9 +86,8 @@ public class GlobalWineScoreController {
                         Pattern pattern = Pattern.compile(regex);
                         Matcher matcher = pattern.matcher(latestResults.next);
                         boolean b = matcher.find();
-                        if (b) limitOffset.set(matcher.group());
+                        if (b) limitOffset = matcher.group();
                     }
-
                 }
             }
             wineRepository.saveAll(winesToSave);
