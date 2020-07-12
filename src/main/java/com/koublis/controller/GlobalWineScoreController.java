@@ -1,18 +1,25 @@
 package com.koublis.controller;
 
-import com.koublis.services.utils.HttpUtils;
 import com.koublis.converters.WineConverter;
 import com.koublis.model.dto.globalwinescore.LatestResults;
 import com.koublis.model.dto.globalwinescore.WineDto;
 import com.koublis.model.entities.Wine;
 import com.koublis.repository.WineRepository;
+import com.koublis.services.WebClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -24,57 +31,71 @@ public class GlobalWineScoreController {
     @Autowired
     private WineRepository wineRepository;
 
-    private static final String token = "d84bed838c7eedc086973876a7de117ab2dd91fa";
+    @Autowired
+    private WebClientService webClientService;
+
     private final Logger logger = Logger.getLogger(GlobalWineScoreController.class);
 
+    private final List<Wine> winesToSave = new ArrayList<>();
+
     @PostMapping("/wines/update")
-    public void update() {
+    @ResponseStatus(HttpStatus.OK)
+    public String update() {
 
-        int n = 0;
-        boolean sendRequest = true;
-        boolean parsingError = false;
-        String additionalParameters = "";
+        Runnable runnable = () -> {
+            boolean sendRequest = true;
+            String limitOffset = winesToSave.size() == 0 ? "" : "?limit=100&offset=" + winesToSave.size();
 
-        while (sendRequest) {
-            try {
-                final String hostname = "api.globalwinescore.com";
-                final String path = "/globalwinescores/latest/";
-                LatestResults result = HttpUtils.httpGetBuilder(hostname, path + additionalParameters, null, token, LatestResults.class);
-                if (result != null) {
-                    List<WineDto> dtos = Stream.of(result.results).filter(r -> r.wine_id != null).collect(Collectors.toList());
-                    List<Wine> wines = dtos.stream().map(WineConverter::WineDtoToWine).collect(Collectors.toList());
-                    wineRepository.saveAll(wines);
-                    n++;
-                    logger.debug("GlobalWineScore : Request #" + n + " sended & saved.");
-                    parsingError = false;
-
-                    // Checking if another request is needed
-                    if (result.next == null) {
-                        sendRequest = false;
-                    } else {
-                        // get additional parameters (limit/offset) for next request
-                        String regex = "/[^/]*$";
-                        Pattern pattern = Pattern.compile(regex);
-                        Matcher matcher = pattern.matcher(result.next);
-                        boolean b = matcher.find();
-                        if (b) additionalParameters = matcher.group();
-                    }
-                }
-            } catch (IOException e) {
-                try {
-                    if (parsingError) {
-                        logger.warn("GlobalWineScore : Parsing error.");
-                    } else {
-                        parsingError = true;
-                        logger.warn("GlobalWineScore API Rate limiting : For API requests, the rate limit allows for up to +-10 requests per minute.");
+            while (sendRequest) {
+                WebClient.RequestHeadersSpec<?> requestGetLatestWines = webClientService
+                        .globalWineService.get()
+                        .uri("/globalwinescores/latest/" + limitOffset);
+                ClientResponse clientResponse = Objects.requireNonNull(requestGetLatestWines.exchange().block());
+                if (clientResponse.statusCode().value() == 429) {
+                    logger.warn("GlobalWineScore API Rate limiting : " + clientResponse.statusCode().getReasonPhrase());
+                    try {
                         Thread.sleep(600 * 1000);
-                        n = 0;
+                    } catch (InterruptedException e) {
+                        logger.error(e.getMessage());
                     }
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
+                } else if (clientResponse.statusCode().is5xxServerError()) {
+                    logger.warn("GlobalWineScore Server Error");
+                    sendRequest = false;
+                } else if (clientResponse.statusCode().is4xxClientError()) {
+                    logger.warn("Client error");
+                    sendRequest = false;
+                } else if (clientResponse.statusCode().isError()) {
+                    logger.warn("Parsing error");
+                    sendRequest = false;
+                } else {
+                    LatestResults latestResults = clientResponse
+                            .bodyToMono(LatestResults.class)
+                            .block();
+                    List<WineDto> dtos = Stream.of(Objects.requireNonNull(latestResults).results).filter(r -> r.wine_id != null).collect(Collectors.toList());
+                    List<Wine> wines = dtos.stream().map(WineConverter::WineDtoToWine).collect(Collectors.toList());
+                    winesToSave.addAll(wines);
+                    logger.debug("Update : " + winesToSave.size() + "/" + latestResults.count + " (" + winesToSave.size() * 100 / latestResults.count + "%)");
+
+                    // Check if another request is needed
+                    if (latestResults.next == null || winesToSave.size() >= latestResults.count) {
+                        sendRequest = false;
+                        winesToSave.clear();
+                    } else {
+                        // additional limit/offset for next request
+                        String regex = "[^/]*$";
+                        Pattern pattern = Pattern.compile(regex);
+                        Matcher matcher = pattern.matcher(latestResults.next);
+                        boolean b = matcher.find();
+                        if (b) limitOffset = matcher.group();
+                    }
                 }
             }
-        }
-        logger.debug("GlobalWineScore : Updating wines is over.");
+            wineRepository.saveAll(winesToSave);
+            logger.debug("GlobalWineScore : Updating wines is over.");
+        };
+        Thread t = new Thread(runnable);
+        t.start();
+
+        return "Updating wines. May took several minutes.";
     }
 }
