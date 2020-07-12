@@ -82,9 +82,7 @@ public class GlobalWineScoreController {
                         winesToSave.clear();
                     } else {
                         // additional limit/offset for next request
-                        String regex = "[^/]*$";
-                        Pattern pattern = Pattern.compile(regex);
-                        Matcher matcher = pattern.matcher(latestResults.next);
+                        Matcher matcher = Pattern.compile("[^/]*$").matcher(latestResults.next);
                         boolean b = matcher.find();
                         if (b) limitOffset = matcher.group();
                     }
