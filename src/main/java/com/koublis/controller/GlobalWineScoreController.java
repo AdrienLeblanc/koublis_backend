@@ -18,8 +18,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -48,7 +46,7 @@ public class GlobalWineScoreController {
 
             while (sendRequest) {
                 WebClient.RequestHeadersSpec<?> requestGetLatestWines = webClientService
-                        .globalWineService.get()
+                        .globalWineScoreWebClient.get()
                         .uri("/globalwinescores/latest/" + limitOffset);
                 ClientResponse clientResponse = Objects.requireNonNull(requestGetLatestWines.exchange().block());
                 if (clientResponse.statusCode().value() == 429) {
@@ -97,3 +95,5 @@ public class GlobalWineScoreController {
         return "Updating wines. May took several minutes.";
     }
 }
+
+

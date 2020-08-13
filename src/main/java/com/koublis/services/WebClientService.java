@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class WebClientService {
 
-    public WebClient globalWineService;
+    public WebClient globalWineScoreWebClient;
 
-    private static final String token = "d84bed838c7eedc086973876a7de117ab2dd91fa";
+    private static final String gwsToken = "d84bed838c7eedc086973876a7de117ab2dd91fa";
 
     public WebClientService(WebClient.Builder webClientBuilder) {
 
@@ -30,13 +30,13 @@ public class WebClientService {
                     connection.addHandlerLast(new WriteTimeoutHandler(15000, TimeUnit.MILLISECONDS));
                 });
 
-        this.globalWineService = WebClient
+        this.globalWineScoreWebClient = WebClient
                 .builder()
                 .baseUrl("https://api.globalwinescore.com")
                 .defaultHeaders(httpHeaders -> {
                     httpHeaders.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
                     httpHeaders.add(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-                    httpHeaders.add(HttpHeaders.AUTHORIZATION, "Token " + token);
+                    httpHeaders.add(HttpHeaders.AUTHORIZATION, "Token " + gwsToken);
                 })
                 .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                 .build();
