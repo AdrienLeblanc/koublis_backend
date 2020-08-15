@@ -50,7 +50,7 @@ public class GlobalWineScoreController {
                 WebClient.RequestHeadersSpec<?> requestGetLatestWines = webClientService
                         .globalWineScoreWebClient.get()
                         .uri("/globalwinescores/latest/" + limitOffset);
-                ClientResponse clientResponse = Objects.requireNonNull(requestGetLatestWines.exchange().block());
+                ClientResponse clientResponse = Objects.requireNonNull(requestGetLatestWines.exchange().retry(3).block());
                 if (clientResponse.statusCode().value() == 429) {
                     logger.warn("GlobalWineScore API Rate limiting : " + clientResponse.statusCode().getReasonPhrase());
                     try {
@@ -79,7 +79,6 @@ public class GlobalWineScoreController {
                     // Check if another request is needed
                     if (latestResults.next == null || winesToSave.size() >= latestResults.count) {
                         sendRequest = false;
-                        winesToSave.clear();
                     } else {
                         // additional limit/offset for next request
                         Matcher matcher = Pattern.compile("[^/]*$").matcher(latestResults.next);
@@ -89,12 +88,14 @@ public class GlobalWineScoreController {
                 }
             }
             wineRepository.saveAll(winesToSave);
+            winesToSave.clear();
             logger.debug("GlobalWineScore : Updating wines is over.");
         };
         Thread t = new Thread(runnable);
         t.start();
 
-        return ResponseEntity.ok("Updating wines. May took several minutes.");
+        logger.info("Updating wines...");
+        return ResponseEntity.ok("Updating wines...");
     }
 }
 
