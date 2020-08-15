@@ -1,7 +1,7 @@
 package com.koublis.converters;
 
 import com.koublis.model.dto.globalwinescore.WineDto;
-import com.koublis.model.entities.Wine;
+import com.koublis.model.documents.Wine;
 
 public class WineConverter {
 

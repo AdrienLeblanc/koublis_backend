@@ -1,29 +1,13 @@
-package com.koublis.model.entities;
+package com.koublis.model.dto.auth.requests;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
+public class LoginRequest {
+    @NotBlank
     private String username;
 
+    @NotBlank
     private String password;
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return username;

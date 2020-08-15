@@ -1,13 +1,12 @@
-package com.koublis.model.entities;
+package com.koublis.model.documents;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "wines")
+@Document(collection = "wines")
 public class Wine implements Serializable {
 
     @Id

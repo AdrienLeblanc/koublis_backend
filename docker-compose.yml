@@ -5,34 +5,27 @@ volumes:
 
 services:
 
-  db:
-    image: mysql:8.0
-    container_name: db_mysql
+  mongo:
+    image: mongo
+    container_name: springboot-mongo
     restart: always
     ports:
-      - '3306:3306'
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=koublis
-      - MYSQL_USER=koublis
-      - MYSQL_PASSWORD=koublis_password
+      - 27017:27017
     volumes:
-      - datadb:/var/lib/mysql
+      - datadb:/data/db
 
-  phpmyadmin:
-    depends_on:
-      - db
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
     restart: always
     ports:
-      - '8081:80'
+      - 8081:8081
     environment:
-      PMA_HOST: db
-      PMA_USER: root
-      PMA_PASSWORD: root
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
 
-  back:
+
+  springboot:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile

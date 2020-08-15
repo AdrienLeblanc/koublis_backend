@@ -1,7 +1,7 @@
 package com.koublis.controller;
 
 import com.koublis.exception.ResourceNotFoundException;
-import com.koublis.model.entities.Wine;
+import com.koublis.model.documents.Wine;
 import com.koublis.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

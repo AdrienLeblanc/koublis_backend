@@ -1,9 +1,15 @@
 package com.koublis.repository;
 
-import com.koublis.model.entities.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.koublis.model.documents.User;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
 
-    User findByUsername(String username);
+public interface UserRepository extends MongoRepository<User, String> {
+
+    Optional<User> findByUsername(String username);
+
+    Boolean existsByUsername(String username);
+
+    Boolean existsByEmail(String email);
 }

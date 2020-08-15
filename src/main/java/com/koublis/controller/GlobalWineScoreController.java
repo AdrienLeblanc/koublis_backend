@@ -3,12 +3,14 @@ package com.koublis.controller;
 import com.koublis.converters.WineConverter;
 import com.koublis.model.dto.globalwinescore.LatestResults;
 import com.koublis.model.dto.globalwinescore.WineDto;
-import com.koublis.model.entities.Wine;
+import com.koublis.model.documents.Wine;
 import com.koublis.repository.WineRepository;
 import com.koublis.services.WebClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,8 +39,8 @@ public class GlobalWineScoreController {
     private final List<Wine> winesToSave = new ArrayList<>();
 
     @PostMapping("/wines/update")
-    @ResponseStatus(HttpStatus.OK)
-    public String update() {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> update() {
 
         Runnable runnable = () -> {
             boolean sendRequest = true;
@@ -92,7 +94,7 @@ public class GlobalWineScoreController {
         Thread t = new Thread(runnable);
         t.start();
 
-        return "Updating wines. May took several minutes.";
+        return ResponseEntity.ok("Updating wines. May took several minutes.");
     }
 }
 
