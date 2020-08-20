@@ -1,0 +1,40 @@
+image: maven:3.6-jdk-11
+
+stages:
+  - build
+  - build-docker
+  - deploy
+
+maven-build:
+  stage: build
+  script:
+    - mvn package -B
+  artifacts:
+    paths:
+      - target/*.jar
+    expire_in: 2 days
+
+build-docker:
+  stage: build-docker
+  image: docker
+  variables:
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_TLS_CERTDIR: ''
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -f docker/prod/Dockerfile --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
+
+deploy:
+  image: bitnami/kubectl
+  stage: deploy
+  script:
+    - kubectl apply -f k8s/deploy.yml
+    - kubectl rollout restart deployment api -n koublis
+  only:
+    - master
