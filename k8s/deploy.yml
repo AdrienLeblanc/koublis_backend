@@ -4,6 +4,7 @@ kind: Namespace
 metadata:
   name: koublis
 ---
+# https://kubernetes.io/fr/docs/tasks/configure-pod-container/pull-image-private-registry/
 apiVersion: v1
 data:
   .dockerconfigjson: ew0KICAgICJhdXRocyI6IHsNCiAgICAgICAgICAgICJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7DQogICAgICAgICAgICAgICAgICAgICJhdXRoIjogIlkyVnNiR1IzWVd4c1pYSTZTRzVMZUVGdWVVNXhZMkU9Ig0KICAgICAgICAgICAgfQ0KICAgIH0sDQogICAgIkh0dHBIZWFkZXJzIjogew0KICAgICAgICAgICAgIlVzZXItQWdlbnQiOiAiRG9ja2VyLUNsaWVudC8xOS4wMy4xMSAobGludXgpIg0KICAgIH0NCn0=
@@ -191,7 +192,7 @@ spec:
     spec:
       containers:
         - name: koublis-api
-          image: registry.celld.tk/koublis/koublis-api:latest
+          image: registry.celld.tk/celld-projects/koublis-api:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
