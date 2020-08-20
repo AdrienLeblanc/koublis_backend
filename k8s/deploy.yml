@@ -16,7 +16,7 @@ type: kubernetes.io/dockerconfigjson
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: data-db
+  name: data-mongodb
   namespace: koublis
 spec:
   capacity:
@@ -34,13 +34,13 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: data-db
+  name: pvc-data-mongodb
   namespace: koublis
 spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: longhorn
-  volumeName: data-db
+  volumeName: data-mongodb
   resources:
     requests:
       storage: 5Gi
@@ -64,12 +64,12 @@ spec:
         app: koublis-db
     spec:
       initContainers:
-        - name: init-data-db
+        - name: init-data-mongodb
           image: busybox
-          command: ['sh', '-c', "while [ ! -d /var/lib/mysql/lost+found ]; do sleep 1; done"]
+          command: ['sh', '-c', "while [ ! -d /data/db/lost+found ]; do sleep 1; done"]
           volumeMounts:
             - mountPath: /data/db
-              name: data-db
+              name: data-mongodb
       containers:
         - name: koublis-db
           image: mongo:4.4
@@ -77,7 +77,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - mountPath: /data/db
-              name: data-db
+              name: data-mongodb
           resources:
             requests:
               cpu: 100m
@@ -86,9 +86,9 @@ spec:
               cpu: 200m
               memory: 500Mi
       volumes:
-        - name: data-db
+        - name: data-mongodb
           persistentVolumeClaim:
-            claimName: data-db
+            claimName: pvc-data-mongodb
 ---
 apiVersion: v1
 kind: Service
