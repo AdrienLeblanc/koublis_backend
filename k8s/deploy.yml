@@ -6,7 +6,7 @@ metadata:
 ---
 apiVersion: v1
 data:
-  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5yaXZvYWwubWwiOnsidXNlcm5hbWUiOiJyaXZvYWwiLCJwYXNzd29yZCI6Im5YOHMzaXlkNHpuNXdzUnoteXhFIiwiYXV0aCI6ImNtbDJiMkZzT201WU9ITXphWGxrTkhwdU5YZHpVbm90ZVhoRiJ9fX0=
+  .dockerconfigjson: Y2VsbGR3YWxsZXI6SG5LeEFueU5xY2E=
 kind: Secret
 metadata:
   name: regcred
