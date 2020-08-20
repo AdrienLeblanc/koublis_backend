@@ -21,6 +21,12 @@ public class WineController {
         return wineRepository.findAll();
     }
 
+    @GetMapping("/wines/{wineId}")
+    public Wine getWine(@PathVariable Long wineId) {
+        return wineRepository.findById(wineId)
+                .orElseThrow(() -> new ResourceNotFoundException("WineId " + wineId + " not found"));
+    }
+
     @PutMapping("/wines")
     public Wine createWine(@Valid @RequestBody Wine wine) {
         return wineRepository.save(wine);
