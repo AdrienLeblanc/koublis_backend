@@ -175,23 +175,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: koublis-api
   namespace: koublis
   labels:
-    app: api
+    app: koublis-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: api
+      app: koublis-api
   template:
     metadata:
       labels:
-        app: api
+        app: koublis-api
     spec:
       containers:
-        - name: api
-          image: registry.celld.tk/koublis/api:latest
+        - name: koublis-api
+          image: registry.celld.tk/koublis/koublis-api:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -215,21 +215,21 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: api-svc
+  name: koublis-api-svc
   namespace: koublis
   labels:
-    app: api
+    app: koublis-api
 spec:
   ports:
     - port: 80
       targetPort: 8080
   selector:
-    app: api
+    app: koublis-
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: api-ingress
+  name: koublis-api-ingress
   namespace: koublis
 spec:
   rules:
@@ -238,5 +238,5 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: api-svc
+              serviceName: koublis-api-svc
               servicePort: 80
