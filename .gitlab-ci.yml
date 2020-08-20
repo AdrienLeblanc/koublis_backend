@@ -25,10 +25,10 @@ build-docker:
   before_script:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build -f docker/prod/Dockerfile --pull -t registry.celld.tk/koublis/koublis-api:latest .
-#    - docker build -f docker/prod/Dockerfile --pull -t "$CI_REGISTRY_IMAGE" .
-    - docker push registry.celld.tk/koublis/koublis-api:latest
-#    - docker push "$CI_REGISTRY_IMAGE"
+#    - docker build -f docker/prod/Dockerfile --pull -t registry.celld.tk/koublis/koublis-api:latest .
+    - docker build -f docker/prod/Dockerfile --pull -t "$CI_REGISTRY_IMAGE" .
+#    - docker push registry.celld.tk/koublis/koublis-api:latest
+    - docker push "$CI_REGISTRY_IMAGE"
   only:
     - master
 
