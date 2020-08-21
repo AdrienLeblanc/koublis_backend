@@ -237,7 +237,7 @@ spec:
     - host: koublis.celld.tk
       http:
         paths:
-          - path: /
+          - pathType: /api
             backend:
               serviceName: koublis-api-svc
               servicePort: 80
