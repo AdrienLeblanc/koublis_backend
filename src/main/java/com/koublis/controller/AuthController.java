@@ -64,6 +64,7 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                loginRequest.getRemember(),
                 roles));
     }
 
