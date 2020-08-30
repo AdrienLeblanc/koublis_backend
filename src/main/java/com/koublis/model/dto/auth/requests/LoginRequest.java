@@ -9,6 +9,9 @@ public class LoginRequest {
     @NotBlank
     private String password;
 
+    @NotBlank
+    private Boolean remember;
+
     public String getUsername() {
         return username;
     }
@@ -23,5 +26,13 @@ public class LoginRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Boolean getRemember() {
+        return remember;
+    }
+
+    public void setRemember(Boolean remember) {
+        this.remember = remember;
     }
 }

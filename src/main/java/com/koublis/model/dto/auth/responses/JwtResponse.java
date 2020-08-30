@@ -9,13 +9,15 @@ public class JwtResponse {
     private String id;
     private String username;
     private String email;
+    private Boolean remember;
     private List<String> roles;
 
-    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles) {
+    public JwtResponse(String accessToken, String id, String username, String email, Boolean remember, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
         this.email = email;
+        this.remember = remember;
         this.roles = roles;
     }
 
@@ -57,6 +59,14 @@ public class JwtResponse {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Boolean getRemember() {
+        return remember;
+    }
+
+    public void setRemember(Boolean remember) {
+        this.remember = remember;
     }
 
     public List<String> getRoles() {
