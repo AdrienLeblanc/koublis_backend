@@ -30,7 +30,7 @@ spec:
   csi:
     driver: driver.longhorn.io
     fsType: ext4
-    volumeHandle: koublis-db
+    volumeHandle: mongodb-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
