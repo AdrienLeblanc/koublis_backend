@@ -7,7 +7,7 @@ services:
 
   mongo:
     image: mongo
-    container_name: springboot-mongo
+    container_name: mongo
     restart: always
     ports:
       - 27017:27017
@@ -35,5 +35,5 @@ services:
       - '8080:8080'
       - '8000:8000'
     environment:
-      ME_CONFIG_MONGODB_SERVER: koublis
+      ME_CONFIG_MONGODB_SERVER: mongo/koublis
 
