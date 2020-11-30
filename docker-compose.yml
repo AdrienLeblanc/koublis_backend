@@ -35,5 +35,6 @@ services:
       - '8080:8080'
       - '8000:8000'
     environment:
-      ME_CONFIG_MONGODB_SERVER: mongo/koublis
+      MONGODB_SERVER: mongo
+      MONGODB_DATABASE: koublis
 
