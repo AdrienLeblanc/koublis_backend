@@ -129,7 +129,7 @@ spec:
             - containerPort: 8081
           env:
             - name: ME_CONFIG_MONGODB_SERVER
-              value: db-svc.koublis.svc.cluster.local
+              value: db-svc.koublis.svc.cluster.local/koublis
             - name: ME_CONFIG_MONGODB_ADMINUSERNAME
               value: root
             - name: ME_CONFIG_MONGODB_ADMINPASSWORD
@@ -198,11 +198,7 @@ spec:
             - containerPort: 8080
           env:
             - name: ME_CONFIG_MONGODB_SERVER
-              value: db-svc.koublis.svc.cluster.local
-#            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
-#              value: root
-#            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
-#              value: connarde
+              value: db-svc.koublis.svc.cluster.local/koublis
           resources:
             requests:
               cpu: 250m
