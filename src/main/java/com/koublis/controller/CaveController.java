@@ -1,70 +1,52 @@
 package com.koublis.controller;
 
-import com.koublis.exception.ResourceNotFoundException;
-import com.koublis.model.documents.Cave;
-import com.koublis.model.documents.Wine;
-import com.koublis.repository.CaveRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.koublis.mappers.CaveMapper;
+import com.koublis.services.CaveService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-@RequestMapping("/api/")
+@RequiredArgsConstructor
+@RequestMapping("/caves")
 public class CaveController {
 
-    @Autowired
-    private CaveRepository caveRepository;
+    private final CaveService caveService;
+    private final CaveMapper caveMapper;
 
-    @GetMapping("/caves")
-    public List<Cave> getAllCaves() {
-        return caveRepository.findAll();
+    @GetMapping
+    public List<CaveDTO> getAllCaves() {
+        return caveService.findAll()
+                .stream()
+                .map(caveMapper::toCaveDTO)
+                .toList();
     }
 
-    @GetMapping("/caves/{caveId}")
-    public Cave getCave(@PathVariable Long caveId) {
-        return caveRepository.findById(caveId)
-                .orElseThrow(() -> new ResourceNotFoundException("CaveId " + caveId + " not found"));
+    @GetMapping("/{cave-id}")
+    public CaveDTO getCave(@PathVariable(name = "cave-id") Long caveId) {
+        return caveMapper.toCaveDTO(caveService.findCaveById(caveId));
     }
 
-    @PutMapping("/caves")
-    public Cave createCave(@Valid @RequestBody Cave cave) {
-        return caveRepository.save(cave);
+    @PostMapping
+    public CaveDTO createCave(@RequestParam(name = "cave-name") String caveName) {
+        return caveMapper.toCaveDTO(
+                caveService.createCave(caveName)
+        );
     }
 
-    @PostMapping("/caves/{caveId}")
-    public Cave updateCave(@PathVariable Long caveId, @Valid @RequestBody Cave caveRequest) {
-        return caveRepository.findById(caveId).map(cave -> {
-            cave.setName(caveRequest.getName());
-            cave.setWines(caveRequest.getWines());
-            return caveRepository.save(cave);
-        }).orElseThrow(() -> new ResourceNotFoundException("CaveId " + caveId + " not found"));
+    @PutMapping("/{cave-id}")
+    public CaveDTO updateCave(
+            @PathVariable(name = "cave-id") Long caveId,
+            @RequestParam(name = "cave-name") String caveName
+    ) {
+        return caveMapper.toCaveDTO(
+                caveService.updateCave(caveId, caveName)
+        );
     }
 
-    @PutMapping("/caves/{caveId}/addWine")
-    public Cave addWineToCave(@PathVariable Long caveId, @Valid @RequestBody Wine wineRequest) {
-        return caveRepository.findById(caveId).map(cave -> {
-            cave.getWines().add(wineRequest);
-            return caveRepository.save(cave);
-        }).orElseThrow(() -> new ResourceNotFoundException("CaveId " + caveId + " not found"));
-    }
-
-    @DeleteMapping("/caves/{caveId}/removeWine")
-    public Cave removeWineFromCave(@PathVariable Long caveId, @Valid @RequestBody Wine wineRequest) {
-        return caveRepository.findById(caveId).map(cave -> {
-            cave.getWines().remove(wineRequest);
-            return caveRepository.save(cave);
-        }).orElseThrow(() -> new ResourceNotFoundException("CaveId " + caveId + " not found"));
-    }
-
-    @DeleteMapping("/caves/{caveId}")
-    public ResponseEntity<?> deleteCave(@PathVariable Long caveId) {
-        return caveRepository.findById(caveId).map(cave -> {
-            caveRepository.delete(cave);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("CaveId " + caveId + " not found"));
+    @DeleteMapping("/{cave-id}")
+    public void deleteCave(@PathVariable(name = "cave-id") Long caveId) {
+        caveService.deleteCave(caveId);
     }
 }

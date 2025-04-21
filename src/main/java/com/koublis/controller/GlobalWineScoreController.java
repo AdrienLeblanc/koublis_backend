@@ -1,14 +1,12 @@
 package com.koublis.controller;
 
-import com.koublis.converters.WineConverter;
+import com.koublis.mappers.WineMapper;
 import com.koublis.model.dto.globalwinescore.LatestResults;
-import com.koublis.model.dto.globalwinescore.WineDto;
 import com.koublis.model.documents.Wine;
 import com.koublis.repository.WineRepository;
 import com.koublis.services.WebClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -71,8 +69,8 @@ public class GlobalWineScoreController {
                     LatestResults latestResults = clientResponse
                             .bodyToMono(LatestResults.class)
                             .block();
-                    List<WineDto> dtos = Stream.of(Objects.requireNonNull(latestResults).results).filter(r -> r.wine_id != null).collect(Collectors.toList());
-                    List<Wine> wines = dtos.stream().map(WineConverter::WineDtoToWine).collect(Collectors.toList());
+                    List<WineDTO> dtos = Stream.of(Objects.requireNonNull(latestResults).results).filter(r -> r.wine_id != null).collect(Collectors.toList());
+                    List<Wine> wines = dtos.stream().map(WineMapper::toWine).collect(Collectors.toList());
                     winesToSave.addAll(wines);
                     logger.debug("Update : " + winesToSave.size() + "/" + latestResults.count + " (" + winesToSave.size() * 100 / latestResults.count + "%)");
 

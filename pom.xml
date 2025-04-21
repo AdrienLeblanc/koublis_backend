@@ -24,6 +24,7 @@
         <jackson-databind.version>2.13.4.2</jackson-databind.version>
         <lombok.version>1.18.38</lombok.version>
         <jjwt.version>0.9.1</jjwt.version>
+        <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
     </properties>
 
     <dependencies>
@@ -54,6 +55,12 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
             <version>${mongo-java-driver.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>${jakarta.validation-api.version}</version>
         </dependency>
 
         <!-- JSON library -->

@@ -1,69 +1,64 @@
 package com.koublis.controller;
 
-import com.koublis.exception.ResourceNotFoundException;
-import com.koublis.model.documents.Wine;
-import com.koublis.repository.WineRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.koublis.mappers.WineMapper;
+import com.koublis.services.WineService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
-@RequestMapping("/api/")
+@RequiredArgsConstructor
+@RequestMapping("/caves/{cave-id}/wines")
 public class WineController {
 
-    @Autowired
-    private WineRepository wineRepository;
+    private final WineService wineService;
+    private final WineMapper wineMapper;
 
-    @GetMapping("/wines")
-    public List<Wine> getAllWines() {
-        return wineRepository.findAll();
+    @GetMapping
+    public List<WineDTO> getAllWines(
+            @PathVariable(value = "cave-id") Long caveId
+    ) {
+        return wineService.findAllByCaveId(caveId)
+                .stream()
+                .map(wineMapper::toWineDTO)
+                .toList();
     }
 
-    @GetMapping("/wines/{wineId}")
-    public Wine getWine(@PathVariable Long wineId) {
-        return wineRepository.findById(wineId)
-                .orElseThrow(() -> new ResourceNotFoundException("WineId " + wineId + " not found"));
+    @GetMapping("/{wineId}")
+    public WineDTO findWineById(
+            @PathVariable(value = "cave-id") Long caveId,
+            @PathVariable Long wineId) {
+        return wineMapper.toWineDTO(wineService.findByCaveIdAndWineId(caveId, wineId));
     }
 
-    @PutMapping("/wines")
-    public Wine createWine(@Valid @RequestBody Wine wine) {
-        return wineRepository.save(wine);
+    @PutMapping
+    public WineDTO createWine(
+            @PathVariable(value = "cave-id") Long caveId,
+            @Valid @RequestBody WineDTO wine
+    ) {
+        return wineMapper.toWineDTO(
+                wineService.createWine(caveId, wineMapper.toWine(wine))
+        );
     }
 
-    @PostMapping("/wines/{wineId}")
-    public Wine updateWine(@PathVariable Long wineId, @Valid @RequestBody Wine wineRequest) {
-        return wineRepository.findById(wineId).map(wine -> {
-            wine.setAppellation(wineRequest.getAppellation());
-            wine.setAppellation_slug(wineRequest.getAppellation_slug());
-            wine.setClassification(wineRequest.getClassification());
-            wine.setColor(wineRequest.getColor());
-            wine.setConfidence_index(wineRequest.getConfidence_index());
-            wine.setCountry(wineRequest.getCountry());
-            wine.setDate(wineRequest.getDate());
-            wine.setIs_primeurs(wineRequest.isIs_primeurs());
-            wine.setJournalist_count(wineRequest.getJournalist_count());
-            wine.setLwin(wineRequest.getLwin());
-            wine.setLwin_11(wineRequest.getLwin_11());
-            wine.setRegions(wineRequest.getRegions());
-            wine.setScore(wineRequest.getScore());
-            wine.setVintage(wineRequest.getVintage());
-            wine.setWine(wineRequest.getWine());
-            wine.setWine_id(wineRequest.getWine_id());
-            wine.setWine_slug(wineRequest.getWine_slug());
-            wine.setWine_type(wineRequest.getWine_type());
-            return wineRepository.save(wine);
-        }).orElseThrow(() -> new ResourceNotFoundException("WineId " + wineId + " not found"));
+    @PostMapping("/{wineId}")
+    public WineDTO updateWine(
+            @PathVariable(value = "cave-id") Long caveId,
+            @PathVariable Long wineId,
+            @Valid @RequestBody WineDTO wineRequest
+    ) {
+        return wineMapper.toWineDTO(
+                wineService.updateWine(wineId, wineId, wineMapper.toWine(wineRequest))
+        );
     }
 
-    @DeleteMapping("/wines/{wineId}")
-    public ResponseEntity<?> deleteWine(@PathVariable Long wineId) {
-        return wineRepository.findById(wineId).map(wine -> {
-            wineRepository.delete(wine);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException("WineId " + wineId + " not found"));
+    @DeleteMapping("/{wineId}")
+    public void deleteWine(
+            @PathVariable(value = "cave-id") Long caveId,
+            @PathVariable Long wineId
+    ) {
+        wineService.deleteWine(caveId, wineId);
     }
 }
