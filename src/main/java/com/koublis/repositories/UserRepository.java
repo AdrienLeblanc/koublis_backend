@@ -1,6 +1,6 @@
-package com.koublis.repository;
+package com.koublis.repositories;
 
-import com.koublis.model.documents.User;
+import com.koublis.domain.mongo.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

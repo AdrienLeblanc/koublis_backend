@@ -1,4 +1,4 @@
-package com.koublis.model.documents;
+package com.koublis.domain.mongo;
 
 import lombok.Builder;
 import lombok.Getter;

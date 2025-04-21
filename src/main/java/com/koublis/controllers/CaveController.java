@@ -1,5 +1,6 @@
-package com.koublis.controller;
+package com.koublis.controllers;
 
+import com.koublis.controllers.dto.CaveDTO;
 import com.koublis.mappers.CaveMapper;
 import com.koublis.services.CaveService;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.koublis.mappers;
 
-import com.koublis.controller.CaveDTO;
-import com.koublis.model.documents.Cave;
+import com.koublis.controllers.dto.CaveDTO;
+import com.koublis.domain.mongo.Cave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

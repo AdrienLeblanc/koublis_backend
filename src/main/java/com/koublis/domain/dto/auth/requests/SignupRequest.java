@@ -1,4 +1,4 @@
-package com.koublis.model.dto.auth.requests;
+package com.koublis.domain.dto.auth.requests;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

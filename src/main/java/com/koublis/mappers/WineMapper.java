@@ -1,7 +1,7 @@
 package com.koublis.mappers;
 
-import com.koublis.controller.WineDTO;
-import com.koublis.model.documents.Wine;
+import com.koublis.controllers.dto.WineDTO;
+import com.koublis.domain.mongo.Wine;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

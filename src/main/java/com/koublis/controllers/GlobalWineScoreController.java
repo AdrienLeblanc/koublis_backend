@@ -1,9 +1,10 @@
-package com.koublis.controller;
+package com.koublis.controllers;
 
+import com.koublis.controllers.dto.WineDTO;
 import com.koublis.mappers.WineMapper;
-import com.koublis.model.dto.globalwinescore.LatestResults;
-import com.koublis.model.documents.Wine;
-import com.koublis.repository.WineRepository;
+import com.koublis.domain.dto.globalwinescore.LatestResults;
+import com.koublis.domain.mongo.Wine;
+import com.koublis.repositories.WineRepository;
 import com.koublis.services.WebClientService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

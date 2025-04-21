@@ -1,4 +1,4 @@
-package com.koublis.model.dto.auth.responses;
+package com.koublis.domain.dto.auth.responses;
 
 import java.util.List;
 

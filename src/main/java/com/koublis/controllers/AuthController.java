@@ -1,14 +1,14 @@
-package com.koublis.controller;
+package com.koublis.controllers;
 
-import com.koublis.model.documents.ERole;
-import com.koublis.model.documents.Role;
-import com.koublis.model.documents.User;
-import com.koublis.model.dto.auth.requests.LoginRequest;
-import com.koublis.model.dto.auth.requests.SignupRequest;
-import com.koublis.model.dto.auth.responses.JwtResponse;
-import com.koublis.model.dto.auth.responses.MessageResponse;
-import com.koublis.repository.RoleRepository;
-import com.koublis.repository.UserRepository;
+import com.koublis.domain.mongo.ERole;
+import com.koublis.domain.mongo.Role;
+import com.koublis.domain.mongo.User;
+import com.koublis.domain.dto.auth.requests.LoginRequest;
+import com.koublis.domain.dto.auth.requests.SignupRequest;
+import com.koublis.domain.dto.auth.responses.JwtResponse;
+import com.koublis.domain.dto.auth.responses.MessageResponse;
+import com.koublis.repositories.RoleRepository;
+import com.koublis.repositories.UserRepository;
 import com.koublis.security.jwt.JwtUtils;
 import com.koublis.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;

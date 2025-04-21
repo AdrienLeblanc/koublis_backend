@@ -1,4 +1,4 @@
-package com.koublis.model.dto.globalwinescore;
+package com.koublis.domain.dto.globalwinescore;
 
 import lombok.Builder;
 import lombok.Getter;

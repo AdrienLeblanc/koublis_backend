@@ -1,4 +1,4 @@
-package com.koublis.model.documents;
+package com.koublis.domain.mongo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;

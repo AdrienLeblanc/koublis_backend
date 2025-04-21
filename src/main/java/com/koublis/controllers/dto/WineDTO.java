@@ -1,4 +1,4 @@
-package com.koublis.controller;
+package com.koublis.controllers.dto;
 
 import lombok.Builder;
 import lombok.Getter;

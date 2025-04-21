@@ -1,5 +1,6 @@
-package com.koublis.controller;
+package com.koublis.controllers;
 
+import com.koublis.controllers.dto.WineDTO;
 import com.koublis.mappers.WineMapper;
 import com.koublis.services.WineService;
 import jakarta.validation.Valid;

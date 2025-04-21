@@ -1,7 +1,7 @@
 package com.koublis.security.services;
 
-import com.koublis.model.documents.User;
-import com.koublis.repository.UserRepository;
+import com.koublis.domain.mongo.User;
+import com.koublis.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

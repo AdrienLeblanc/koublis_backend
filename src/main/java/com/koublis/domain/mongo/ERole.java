@@ -1,4 +1,4 @@
-package com.koublis.model.documents;
+package com.koublis.domain.mongo;
 
 public enum ERole {
     ROLE_USER,

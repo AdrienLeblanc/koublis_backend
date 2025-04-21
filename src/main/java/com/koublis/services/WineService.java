@@ -1,8 +1,8 @@
 package com.koublis.services;
 
 import com.koublis.exception.ResourceNotFoundException;
-import com.koublis.model.documents.Wine;
-import com.koublis.repository.WineRepository;
+import com.koublis.domain.mongo.Wine;
+import com.koublis.repositories.WineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;

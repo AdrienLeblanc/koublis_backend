@@ -1,6 +1,6 @@
-package com.koublis.model.dto.globalwinescore;
+package com.koublis.domain.dto.globalwinescore;
 
-import com.koublis.controller.WineDTO;
+import com.koublis.controllers.dto.WineDTO;
 
 import java.io.Serializable;
 

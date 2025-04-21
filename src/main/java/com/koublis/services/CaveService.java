@@ -1,8 +1,8 @@
 package com.koublis.services;
 
 import com.koublis.exception.ResourceNotFoundException;
-import com.koublis.model.documents.Cave;
-import com.koublis.repository.CaveRepository;
+import com.koublis.domain.mongo.Cave;
+import com.koublis.repositories.CaveRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
