@@ -18,13 +18,16 @@
     </parent>
 
     <properties>
-        <start-class>com.koublis.Application</start-class>
         <java.version>21</java.version>
-        <mongo-java-driver.version>3.12.8</mongo-java-driver.version>
-        <jackson-databind.version>2.13.4.2</jackson-databind.version>
-        <lombok.version>1.18.38</lombok.version>
-        <jjwt.version>0.9.1</jjwt.version>
+        <start-class>com.koublis.Application</start-class>
+
+        <de.flapdoodle.embed.mongo.version>4.20.0</de.flapdoodle.embed.mongo.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <jackson-databind.version>2.18.3</jackson-databind.version>
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
+        <jjwt-api.version>0.12.6</jjwt-api.version>
+        <lombok.version>1.18.38</lombok.version>
+        <testcontainers.mongodb.version>1.20.6</testcontainers.mongodb.version>
     </properties>
 
     <dependencies>
@@ -51,11 +54,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongo-java-driver.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>jakarta.validation</groupId>
@@ -76,15 +74,31 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-            <version>${jjwt.version}</version>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt-api.version}</version>
+        </dependency>
+
+        <!-- TESTS -->
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mongodb</artifactId>
+            <version>${testcontainers.mongodb.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

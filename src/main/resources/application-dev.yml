@@ -1,0 +1,12 @@
+spring:
+    data:
+        mongodb:
+          host: ${MONGODB_SERVER:localhost}
+          database: ${MONGODB_DATABASE:koublis}
+          username: admin
+          password: admin
+
+koublis:
+  security:
+    jwtSecret: celldwallerSecretKey
+    jwtExpiration: 24h

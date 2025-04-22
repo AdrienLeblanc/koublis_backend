@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: # Set automatically by the test container
+
+koublis:
+  security:
+    jwtSecret: testSecretKey
+    jwtExpiration: 1h
