@@ -1,7 +1,9 @@
 spring:
-  data:
-    mongodb:
-      uri: # Set automatically by the test container
+  datasource:
+    url: # Set automatically by the test container
+    username: # Set automatically by the test container
+    password: # Set automatically by the test container
+    driver-class-name: # Set automatically by the test container
 
 koublis:
   security:

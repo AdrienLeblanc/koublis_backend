@@ -1,10 +1,16 @@
 spring:
-    data:
-        mongodb:
-          host: ${MONGODB_SERVER:localhost}
-          database: ${MONGODB_DATABASE:koublis}
-          username: admin
-          password: admin
+  datasource:
+    url: jdbc:mysql://localhost:3306/koublis?sslMode=PREFERRED
+    username: celld
+    password: secret123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
 koublis:
   security:

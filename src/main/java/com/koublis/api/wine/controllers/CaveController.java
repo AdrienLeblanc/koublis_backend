@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CaveController {
     }
 
     @GetMapping("/{cave-id}")
-    public CaveDTO getCave(@PathVariable(name = "cave-id") Long caveId) {
+    public CaveDTO getCave(@PathVariable(name = "cave-id") UUID caveId) {
         return caveMapper.toCaveDTO(caveService.findCaveById(caveId));
     }
 
@@ -38,7 +39,7 @@ public class CaveController {
 
     @PutMapping("/{cave-id}")
     public CaveDTO updateCave(
-            @PathVariable(name = "cave-id") Long caveId,
+            @PathVariable(name = "cave-id") UUID caveId,
             @RequestParam(name = "cave-name") String caveName
     ) {
         return caveMapper.toCaveDTO(
@@ -47,7 +48,7 @@ public class CaveController {
     }
 
     @DeleteMapping("/{cave-id}")
-    public void deleteCave(@PathVariable(name = "cave-id") Long caveId) {
+    public void deleteCave(@PathVariable(name = "cave-id") UUID caveId) {
         caveService.deleteCave(caveId);
     }
 }

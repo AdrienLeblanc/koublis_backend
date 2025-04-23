@@ -1,23 +1,28 @@
 package com.koublis.api.auth.domain;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
+import static jakarta.persistence.CascadeType.ALL;
+
+@Entity
 @Getter
-@Builder
-@Document(collection = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @NotBlank
     @Size(max = 20)
@@ -32,6 +37,6 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    @DBRef
-    private Set<Role> roles = new HashSet<>();
+    @OneToMany(cascade = ALL, fetch = FetchType.EAGER)
+    private Set<Role> roles;
 }

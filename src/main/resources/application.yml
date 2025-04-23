@@ -1,10 +1,9 @@
 spring:
-    data:
-        mongodb:
-          host: ${MONGODB_SERVER:localhost}
-          database: ${MONGODB_DATABASE:koublis}
-          username: admin
-          password: admin
+  datasource:
+    url: ${MYSQL_URL}/koublis
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 koublis:
   security:

@@ -5,6 +5,7 @@ import com.koublis.api.wine.domain.Wine;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class WineMapper {
@@ -24,15 +25,19 @@ public class WineMapper {
                 .confidenceIndex(wineDto.getConfidenceIndex())
                 .country(wineDto.getCountry())
                 .date(wineDto.getDate())
+                .id(wineDto.getId())
                 .isPrimeurs(wineDto.getIsPrimeurs())
                 .journalistCount(wineDto.getJournalistCount())
                 .lwin(wineDto.getLwin())
                 .lwin11(wineDto.getLwin11())
-                .regions(wineDto.getRegions())
+                .regions(wineDto.getRegions()
+                        .stream()
+                        .reduce((a, b) -> a + "," + b)
+                        .orElse(null)
+                )
                 .score(wineDto.getScore())
                 .vintage(wineDto.getVintage())
                 .wine(wineDto.getWine())
-                .wineId(wineDto.getWineId())
                 .wineSlug(wineDto.getWineSlug())
                 .wineType(wineDto.getWineType())
                 .build();
@@ -53,15 +58,18 @@ public class WineMapper {
                 .confidenceIndex(wine.getConfidenceIndex())
                 .country(wine.getCountry())
                 .date(wine.getDate())
+                .id(wine.getId())
                 .isPrimeurs(wine.getIsPrimeurs())
                 .journalistCount(wine.getJournalistCount())
                 .lwin(wine.getLwin())
                 .lwin11(wine.getLwin11())
-                .regions(wine.getRegions())
+                .regions(Optional.ofNullable(wine.getRegions())
+                        .map(regionsStr -> regionsStr.split(","))
+                        .map(List::of)
+                        .orElse(null))
                 .score(wine.getScore())
                 .vintage(wine.getVintage())
                 .wine(wine.getWine())
-                .wineId(wine.getWineId())
                 .wineSlug(wine.getWineSlug())
                 .wineType(wine.getWineType())
                 .build();

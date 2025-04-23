@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -12,7 +13,7 @@ public class JwtResponse {
 
     private final String type = "Bearer";
     private String token;
-    private String id;
+    private UUID id;
     private String username;
     private String email;
     private Boolean remember;

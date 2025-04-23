@@ -6,11 +6,13 @@ import lombok.Getter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
 public class WineDTO implements Serializable {
 
+    private UUID id;
     private String appellation;
     private String appellationSlug;
     private String classification;
@@ -26,7 +28,6 @@ public class WineDTO implements Serializable {
     private Long score;
     private String vintage;
     private String wine;
-    private Long wineId;
     private String wineSlug;
     private String wineType;
 

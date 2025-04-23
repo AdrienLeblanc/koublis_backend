@@ -1,0 +1,12 @@
+### Sign-up as a new user
+POST http://localhost:8080/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword",
+  "email": "testemail",
+  "roles": ["ROLE_USER"]
+}
+
+###

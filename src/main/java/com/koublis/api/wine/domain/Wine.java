@@ -1,32 +1,35 @@
 package com.koublis.api.wine.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.UUID;
 
+@Entity
+@With
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder(toBuilder = true)
-@Document(collection = "wines")
 public class Wine implements Serializable {
 
-    @DBRef
-    private Cave cave; // Référence à la cave
+    @ManyToOne
+    @JoinColumn(name = "caveId", referencedColumnName = "id", nullable = false)
+    private Cave cave;
 
     @Id
-    private Long wineId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
     private String wine;
     private String wineSlug;
     private String appellation;
     private String appellationSlug;
     private String color;
     private String wineType;
-    private List<String> regions;
+    private String regions;
     private String country;
     private String classification;
     private String vintage;
