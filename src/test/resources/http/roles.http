@@ -10,3 +10,14 @@ Content-Type: application/json
 }
 
 ###
+
+### Sign-up as a new user
+POST http://localhost:8080/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+
+###

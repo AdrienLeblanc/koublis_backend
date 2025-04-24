@@ -48,6 +48,7 @@ class WineRepositoryTest extends AbstractSpringTest {
 
         // Then
         assertThat(savedWine.getId()).isNotNull();
+        assertThat(savedWine.getId().version()).isEqualTo(4);
         assertThat(savedWine.getAppellation()).isEqualTo(wine.getAppellation());
     }
 

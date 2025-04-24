@@ -48,9 +48,7 @@ public class WineService {
 
         log.debug("Updating wine with id {} for cave with id {}. Body={}", wineId, caveId, wineRequest);
         return wineRepository.save(
-                wineRequest.toBuilder()
-                        .id(wineFound.getId())
-                        .build()
+                wineRequest.withId(wineFound.getId())
         );
     }
 

@@ -43,9 +43,7 @@ public class CaveService {
         val found = this.findCaveById(caveId);
 
         return caveRepository.save(
-                found.toBuilder()
-                        .name(caveName)
-                        .build()
+                found.withName(caveName)
         );
     }
 

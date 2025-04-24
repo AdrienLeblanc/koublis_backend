@@ -10,25 +10,16 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class WineDTO implements Serializable {
+public class WineDTO {
 
     private UUID id;
     private String appellation;
-    private String appellationSlug;
     private String classification;
     private String color;
-    private String confidenceIndex;
     private String country;
     private LocalDate date;
-    private Boolean isPrimeurs;
-    private Long journalistCount;
-    private Long lwin;
-    private Long lwin11;
+    private Boolean isPrimeur;
     private List<String> regions;
-    private Long score;
-    private String vintage;
-    private String wine;
-    private String wineSlug;
-    private String wineType;
+    private Integer vintage;
 
 }

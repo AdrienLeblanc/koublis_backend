@@ -36,6 +36,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
 
         // Then
         assertThat(savedCave.getId()).isNotNull();
+        assertThat(savedCave.getId().version()).isEqualTo(4);
         assertThat(savedCave.getName()).isEqualTo(cave.getName());
     }
 
@@ -77,9 +78,9 @@ class CaveRepositoryTest extends AbstractSpringTest {
                 .build();
 
         // When
-        caveRepository.save(savedCave.toBuilder()
-                .wines(List.of(wine1, wine2))
-                .build());
+        caveRepository.save(
+                savedCave.withWines(List.of(wine1, wine2))
+        );
 
         val caveFound = caveRepository.findById(savedCave.getId()).orElse(null);
         val winesFound = wineRepository.findAllByCaveId(savedCave.getId());

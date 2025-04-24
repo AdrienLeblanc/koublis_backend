@@ -6,8 +6,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +33,6 @@ public class JwtService {
                 .plusHours(securityPropertiesConfiguration.getJwtExpiration().toHours())
                 .toInstant(ZoneOffset.UTC);
 
-        val keyBytes = Decoders.BASE64.decode(securityPropertiesConfiguration.getJwtSecret());
-        val key = Keys.hmacShaKeyFor(keyBytes);
-
         return Jwts.builder()
                 .subject((userPrincipal.getUsername()))
                 .issuedAt(new Date())
@@ -56,8 +51,7 @@ public class JwtService {
     }
 
     public SecretKey secretKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(securityPropertiesConfiguration.getJwtSecret());
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Jwts.SIG.HS256.key().build();
     }
 
     public boolean validateJwtToken(String authToken) {

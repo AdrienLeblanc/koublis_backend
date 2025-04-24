@@ -2,43 +2,51 @@ package com.koublis.api.wine.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@Table(name = "wines")
 @With
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Wine implements Serializable {
-
-    @ManyToOne
-    @JoinColumn(name = "caveId", referencedColumnName = "id", nullable = false)
-    private Cave cave;
+public class Wine {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @UuidGenerator
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
     private UUID id;
 
-    private String wine;
-    private String wineSlug;
+    @ManyToOne
+    @JoinColumn(name = "cave_id", referencedColumnName = "id", nullable = false)
+    private Cave cave;
+
+    @Column(name = "appellation", length = 50)
     private String appellation;
-    private String appellationSlug;
+
+    @Column(name = "color", length = 50)
     private String color;
-    private String wineType;
+
+    @Column(name = "regions")
     private String regions;
+
+    @Column(name = "country", length = 50)
     private String country;
+
+    @Column(name = "classification", length = 50)
     private String classification;
-    private String vintage;
+
+    @Column(name = "vintage")
+    private Integer vintage;
+
+    @Column(name = "date")
     private LocalDate date;
-    private Boolean isPrimeurs;
-    private Long score;
-    private String confidenceIndex;
-    private Long journalistCount;
-    private Long lwin;
-    private Long lwin11;
+
+    @Column(name = "is_primeur")
+    private Boolean isPrimeur;
 
 }

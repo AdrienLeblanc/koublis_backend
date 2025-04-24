@@ -22,11 +22,5 @@ public class AbstractSpringTest {
         registry.add("spring.datasource.username", mySqlContainer::getUsername);
         registry.add("spring.datasource.password", mySqlContainer::getPassword);
         registry.add("spring.datasource.driver-class-name", mySqlContainer::getDriverClassName);
-
-        // Enable automatic schema generation
-        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
-        registry.add("spring.jpa.show-sql", () -> "true");
-        registry.add("spring.jpa.properties.hibernate.format_sql", () -> "true");
-
     }
 }
