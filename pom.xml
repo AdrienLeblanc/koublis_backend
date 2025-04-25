@@ -27,6 +27,7 @@
         <jjwt.version>0.12.6</jjwt.version>
         <lombok.version>1.18.38</lombok.version>
         <testcontainers.mysql.version>1.20.6</testcontainers.mysql.version>
+        <karate-junit5.version>1.5.1</karate-junit5.version>
     </properties>
 
     <dependencies>
@@ -109,6 +110,13 @@
             <version>${testcontainers.mysql.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.karatelabs</groupId>
+            <artifactId>karate-junit5</artifactId>
+            <version>${karate-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
