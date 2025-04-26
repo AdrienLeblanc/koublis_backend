@@ -1,6 +1,5 @@
 package com.koublis.api;
 
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@Profile("it")
+//@Profile("it")
 @RequestMapping("/api/test")
 public class TestController {
     @GetMapping("/all")
@@ -23,7 +22,7 @@ public class TestController {
     }
 
     @GetMapping("/mod")
-    @PreAuthorize("hasRole('MODERATOR')")
+    @PreAuthorize("hasRole('MODERATOR') or hasRole('ADMIN')")
     public String moderatorAccess() {
         return "Moderator Board.";
     }

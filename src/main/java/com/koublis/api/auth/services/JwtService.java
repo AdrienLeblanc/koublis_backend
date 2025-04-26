@@ -24,6 +24,7 @@ import java.util.Date;
 public class JwtService {
 
     private final SecurityPropertiesConfiguration securityPropertiesConfiguration;
+    private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
 
     public String generateJwtToken(Authentication authentication) {
 
@@ -37,27 +38,23 @@ public class JwtService {
                 .subject((userPrincipal.getUsername()))
                 .issuedAt(new Date())
                 .expiration(Date.from(jwtExpiration))
-                .signWith(secretKey())
+                .signWith(secretKey)
                 .compact();
     }
 
     public String getUserNameFromJwtToken(String token) {
         return Jwts.parser()
-                .verifyWith(secretKey())
+                .verifyWith(secretKey)
                 .build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
     }
 
-    public SecretKey secretKey() {
-        return Jwts.SIG.HS256.key().build();
-    }
-
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser()
-                    .verifyWith(secretKey())
+                    .verifyWith(secretKey)
                     .build()
                     .parseSignedClaims(authToken);
             return true;

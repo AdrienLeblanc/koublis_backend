@@ -22,3 +22,7 @@ koublis:
   security:
     jwtSecret: celldwallerSecretKey
     jwtExpiration: 24h
+
+logging:
+  level:
+    com.koublis: debug

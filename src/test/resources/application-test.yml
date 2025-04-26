@@ -22,3 +22,7 @@ koublis:
   security:
     jwtSecret: testSecretKey
     jwtExpiration: 1h
+
+logging:
+  level:
+    com.koublis: debug

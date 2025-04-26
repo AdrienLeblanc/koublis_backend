@@ -3,7 +3,6 @@ package com.koublis.api.auth.controllers.dto.responses;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
 import java.util.UUID;
 
 
@@ -17,6 +16,6 @@ public class JwtResponse {
     private String username;
     private String email;
     private Boolean remember;
-    private List<String> roles;
+    private String role;
 
 }

@@ -6,8 +6,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Set;
-
 @Getter
 @Builder
 public class SignupRequest {
@@ -21,7 +19,8 @@ public class SignupRequest {
     @Email
     private String email;
 
-    private Set<String> roles;
+    @NotBlank
+    private String role;
 
     @NotBlank
     @Size(min = 6, max = 40)

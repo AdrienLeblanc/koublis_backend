@@ -6,7 +6,7 @@ Content-Type: application/json
   "username": "testuser",
   "password": "testpassword",
   "email": "testemail",
-  "roles": ["ROLE_USER"]
+  "role": "ROLE_USER"
 }
 
 ###

@@ -1,7 +1,6 @@
 Feature: User sign-up and sign-in
 
   Scenario: Sign up as a new user
-    #    Given url 'http://localhost:8080/auth/sign-up'
     Given url baseUrl + '/auth/sign-up'
     And request
       """
@@ -9,7 +8,7 @@ Feature: User sign-up and sign-in
         "username": "testuser",
         "password": "testpassword",
         "email": "testemail",
-        "roles": ["ROLE_USER"]
+        "role": "ROLE_USER"
       }
       """
     When method post
@@ -35,7 +34,7 @@ Feature: User sign-up and sign-in
         "username": "testuser",
         "password": "testpassword",
         "email": "testemail",
-        "roles": ["ROLE_USER"]
+        "role": "ROLE_USER"
       }
       """
     When method post

@@ -1,17 +1,11 @@
--- Create roles table
-CREATE TABLE IF NOT EXISTS roles
-(
-    id   BINARY(16) PRIMARY KEY,
-    name VARCHAR(20) NOT NULL UNIQUE
-);
-
 -- Create users table
 CREATE TABLE IF NOT EXISTS users
 (
     id       BINARY(16) PRIMARY KEY,
     username VARCHAR(50)  NOT NULL UNIQUE,
     email    VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(120) NOT NULL
+    password VARCHAR(120) NOT NULL,
+    role     VARCHAR(50)  NOT NULL
 );
 
 -- Create Caves table
@@ -35,9 +29,3 @@ CREATE TABLE IF NOT EXISTS wines
     date           DATE         NULL,
     is_primeur     BOOLEAN      NULL
 );
-
-
--- Insert initial roles
-INSERT INTO roles(id, name) VALUES (UNHEX(REPLACE(UUID(), '-', '')), 'ROLE_USER');
-INSERT INTO roles(id, name) VALUES (UNHEX(REPLACE(UUID(), '-', '')), 'ROLE_MODERATOR');
-INSERT INTO roles(id, name) VALUES (UNHEX(REPLACE(UUID(), '-', '')), 'ROLE_ADMIN');
