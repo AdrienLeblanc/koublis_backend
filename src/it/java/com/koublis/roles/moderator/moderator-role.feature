@@ -17,7 +17,7 @@ Feature: Roles security
     When method get
     Then status 200
 
-  Scenario: Cannot access MODERATOR protected REST endpoint with token
+  Scenario: Can access MODERATOR protected REST endpoint with token
     Given url baseUrl + '/api/test'
     And path '/mod'
     And header Authorization = 'Bearer ' + token
