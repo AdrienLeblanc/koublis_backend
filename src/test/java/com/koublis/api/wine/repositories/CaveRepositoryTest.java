@@ -70,12 +70,12 @@ class CaveRepositoryTest extends AbstractSpringTest {
 
         val wine1 = Wine.builder()
                 .cave(savedCave)
-                .appellation("Wine1")
+                .name("Wine1")
                 .build();
 
         val wine2 = Wine.builder()
                 .cave(savedCave)
-                .appellation("Wine2")
+                .name("Wine2")
                 .build();
 
         // When
@@ -98,7 +98,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
         assertThat(caveFound.getWines())
                 .isNotEmpty()
                 .hasSize(2)
-                .extracting(Wine::getAppellation)
+                .extracting(Wine::getName)
                 .containsExactlyInAnyOrder("Wine1", "Wine2");
 
     }

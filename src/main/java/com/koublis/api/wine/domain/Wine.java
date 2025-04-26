@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -25,8 +24,17 @@ public class Wine {
     @JoinColumn(name = "cave_id", referencedColumnName = "id", nullable = false)
     private Cave cave;
 
-    @Column(name = "appellation", length = 50)
-    private String appellation;
+    @Column(name = "count")
+    private Integer count;
+
+    @Column(name = "name", length = 50)
+    private String name;
+
+    @Column(name = "vintage")
+    private Integer vintage;
+
+    @Column(name = "country", length = 50)
+    private String country;
 
     @Column(name = "color", length = 50)
     private String color;
@@ -34,19 +42,10 @@ public class Wine {
     @Column(name = "regions")
     private String regions;
 
-    @Column(name = "country", length = 50)
-    private String country;
-
     @Column(name = "classification", length = 50)
     private String classification;
 
-    @Column(name = "vintage")
-    private Integer vintage;
-
-    @Column(name = "date")
-    private LocalDate date;
-
-    @Column(name = "is_primeur")
-    private Boolean isPrimeur;
+    @Column(name = "primeur")
+    private Boolean primeur;
 
 }

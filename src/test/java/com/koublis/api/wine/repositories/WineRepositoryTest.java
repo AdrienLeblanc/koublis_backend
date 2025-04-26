@@ -41,7 +41,7 @@ class WineRepositoryTest extends AbstractSpringTest {
         // Given
         val wine = Wine.builder()
                 .cave(cave)
-                .appellation("Test Wine")
+                .name("Test Wine")
                 .build();
 
         // When
@@ -50,7 +50,7 @@ class WineRepositoryTest extends AbstractSpringTest {
         // Then
         assertThat(savedWine.getId()).isNotNull();
         assertThat(savedWine.getId().version()).isEqualTo(4);
-        assertThat(savedWine.getAppellation()).isEqualTo(wine.getAppellation());
+        assertThat(savedWine.getName()).isEqualTo(wine.getName());
     }
 
     @Test
@@ -58,7 +58,7 @@ class WineRepositoryTest extends AbstractSpringTest {
         // Given
         val wine = Wine.builder()
                 .cave(cave)
-                .appellation("Test Wine")
+                .name("Test Wine")
                 .build();
         val savedWine = wineRepository.save(wine);
 
@@ -68,14 +68,14 @@ class WineRepositoryTest extends AbstractSpringTest {
         // Then
         assertThat(wineFound).isNotNull();
         assertThat(wineFound.getId()).isEqualTo(savedWine.getId());
-        assertThat(wineFound.getAppellation()).isEqualTo(savedWine.getAppellation());
+        assertThat(wineFound.getName()).isEqualTo(savedWine.getName());
     }
 
     @Test
     void should_fail_to_save_wine_without_cave() {
         // Given
         val wine = Wine.builder()
-                .appellation("Test Wine")
+                .name("Test Wine")
                 .build();
 
         // When

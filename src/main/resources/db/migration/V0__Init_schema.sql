@@ -20,12 +20,12 @@ CREATE TABLE IF NOT EXISTS wines
 (
     id             BINARY(16) PRIMARY KEY,
     cave_id        BINARY(16) REFERENCES caves (id),
-    appellation    VARCHAR(50)  NULL UNIQUE,
+    count          INT          NULL,
+    name           VARCHAR(50)  NULL UNIQUE,
+    vintage        INT          NULL,
+    country        VARCHAR(50)  NULL,
     color          VARCHAR(50)  NULL,
     regions        VARCHAR(255) NULL,
-    country        VARCHAR(50)  NULL,
     classification VARCHAR(50)  NULL,
-    vintage        INT          NULL,
-    date           DATE         NULL,
-    is_primeur     BOOLEAN      NULL
+    primeur        BOOLEAN      NULL
 );

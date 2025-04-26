@@ -18,19 +18,19 @@ public class WineMapper {
 
     public Wine toWine(WineDTO wineDto) {
         return Wine.builder()
-                .appellation(wineDto.getAppellation())
-                .classification(wineDto.getClassification())
-                .color(wineDto.getColor())
-                .country(wineDto.getCountry())
-                .date(wineDto.getDate())
                 .id(wineDto.getId())
-                .isPrimeur(wineDto.getIsPrimeur())
+                .count(wineDto.getCount())
+                .name(wineDto.getName())
+                .vintage(wineDto.getVintage())
+                .country(wineDto.getCountry())
+                .color(wineDto.getColor())
                 .regions(wineDto.getRegions()
                         .stream()
                         .reduce((a, b) -> a + "," + b)
                         .orElse(null)
                 )
-                .vintage(wineDto.getVintage())
+                .classification(wineDto.getClassification())
+                .primeur(wineDto.getPrimeur())
                 .build();
     }
 
@@ -42,18 +42,18 @@ public class WineMapper {
 
     public WineDTO toWineDTO(Wine wine) {
         return WineDTO.builder()
-                .appellation(wine.getAppellation())
-                .classification(wine.getClassification())
-                .color(wine.getColor())
-                .country(wine.getCountry())
-                .date(wine.getDate())
                 .id(wine.getId())
-                .isPrimeur(wine.getIsPrimeur())
+                .count(wine.getCount())
+                .name(wine.getName())
+                .vintage(wine.getVintage())
+                .country(wine.getCountry())
+                .color(wine.getColor())
                 .regions(Optional.ofNullable(wine.getRegions())
                         .map(regionsStr -> regionsStr.split(","))
                         .map(List::of)
                         .orElse(null))
-                .vintage(wine.getVintage())
+                .classification(wine.getClassification())
+                .primeur(wine.getPrimeur())
                 .build();
     }
 

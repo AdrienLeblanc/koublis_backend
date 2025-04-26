@@ -1,6 +1,5 @@
 package com.koublis.api.auth.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.koublis.api.auth.controllers.dto.requests.LoginRequest;
 import com.koublis.api.auth.controllers.dto.requests.SignupRequest;
 import com.koublis.api.auth.controllers.dto.responses.JwtResponse;
