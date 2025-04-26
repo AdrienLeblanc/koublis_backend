@@ -1,6 +1,6 @@
 package com.koublis.configuration.security;
 
-import com.koublis.api.auth.services.JwtService;
+import com.koublis.api.auth.services.jwt.JwtService;
 import com.koublis.api.auth.services.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

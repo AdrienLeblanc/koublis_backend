@@ -20,7 +20,7 @@ spring:
 
 koublis:
   security:
-    jwtSecret: celldwallerSecretKey
+    jwtSecret: j6F326G7UuS7wmIJ3Pca9vwV/s0QoIXImMsZMVG96cY=
     jwtExpiration: 24h
 
 logging:

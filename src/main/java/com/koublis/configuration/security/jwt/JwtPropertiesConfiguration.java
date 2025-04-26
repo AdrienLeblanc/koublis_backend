@@ -1,4 +1,4 @@
-package com.koublis.configuration.security;
+package com.koublis.configuration.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix = "koublis.security")
-public class SecurityPropertiesConfiguration {
+public class JwtPropertiesConfiguration {
     private String jwtSecret;
 
     @DurationUnit(ChronoUnit.HOURS)

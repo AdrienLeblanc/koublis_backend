@@ -1,7 +1,7 @@
-package com.koublis.api.auth.services;
+package com.koublis.api.auth.services.jwt;
 
 import com.koublis.api.auth.domain.UserDetailsImpl;
-import com.koublis.configuration.security.SecurityPropertiesConfiguration;
+import com.koublis.configuration.security.jwt.JwtConfiguration;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -23,15 +23,15 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtService {
 
-    private final SecurityPropertiesConfiguration securityPropertiesConfiguration;
-    private final SecretKey secretKey = Jwts.SIG.HS256.key().build();
+    private final JwtConfiguration jwtConfiguration;
+    private final SecretKey secretKey;
 
     public String generateJwtToken(Authentication authentication) {
 
         val userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         val jwtExpiration = LocalDateTime.now()
-                .plusHours(securityPropertiesConfiguration.getJwtExpiration().toHours())
+                .plusHours(jwtConfiguration.getJwtExpiration())
                 .toInstant(ZoneOffset.UTC);
 
         return Jwts.builder()

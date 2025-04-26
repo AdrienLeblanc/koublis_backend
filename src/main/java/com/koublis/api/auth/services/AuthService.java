@@ -8,6 +8,7 @@ import com.koublis.api.auth.domain.Role;
 import com.koublis.api.auth.domain.User;
 import com.koublis.api.auth.domain.UserDetailsImpl;
 import com.koublis.api.auth.repositories.UserRepository;
+import com.koublis.api.auth.services.jwt.JwtService;
 import com.koublis.configuration.exceptions.Reason;
 import com.koublis.configuration.exceptions.ResourceNotFoundException;
 import jakarta.validation.Valid;
