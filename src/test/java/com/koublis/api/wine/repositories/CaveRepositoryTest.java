@@ -22,6 +22,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
     @AfterEach
     void tearDown() {
         caveRepository.deleteAll();
+        wineRepository.deleteAll();
     }
 
     @Test
