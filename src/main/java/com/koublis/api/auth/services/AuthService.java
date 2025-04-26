@@ -64,7 +64,7 @@ public class AuthService {
                 .build());
     }
 
-    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws JsonProcessingException {
+    public ResponseEntity<MessageResponse> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (Boolean.TRUE.equals(userRepository.existsByUsername(signUpRequest.getUsername()))) {
             return ResponseEntity
                     .badRequest()
@@ -93,7 +93,6 @@ public class AuthService {
                 .role(Role.valueOf(signUpRequest.getRole()))
                 .build();
 
-        log.debug("Saving user: {}", new ObjectMapper().writeValueAsString(user));
         userRepository.save(user);
 
         return ResponseEntity.ok(
