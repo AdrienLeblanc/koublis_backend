@@ -26,7 +26,7 @@ public class CatalogWineController {
             @RequestParam(required = false) String query,
             Pageable pageable
     ) {
-        return catalogWineService.searchCatalogWine(query, pageable)
+        return catalogWineService.searchCatalogWines(query, pageable)
                 .map(catalogWineMapper::toCatalogWineDTO);
     }
 }

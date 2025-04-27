@@ -15,7 +15,7 @@ public class CatalogWineService {
     
     private final CatalogWineRepository catalogWineRepository;
     
-    public Page<CatalogWine> searchCatalogWine(String query, Pageable pageable) {
+    public Page<CatalogWine> searchCatalogWines(String query, Pageable pageable) {
         log.info("Search {} through catalog wines. {}", query, pageable);
         return catalogWineRepository.search(query, pageable);
     }
