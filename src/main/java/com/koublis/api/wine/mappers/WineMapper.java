@@ -11,7 +11,9 @@ import java.util.Optional;
 public class WineMapper {
 
     public List<Wine> toWines(List<WineDTO> wineDTOs) {
-        return wineDTOs.stream()
+        return Optional.ofNullable(wineDTOs)
+                .stream()
+                .flatMap(List::stream)
                 .map(this::toWine)
                 .toList();
     }
@@ -24,8 +26,9 @@ public class WineMapper {
                 .vintage(wineDto.getVintage())
                 .country(wineDto.getCountry())
                 .color(wineDto.getColor())
-                .regions(wineDto.getRegions()
+                .regions(Optional.ofNullable(wineDto.getRegions())
                         .stream()
+                        .flatMap(List::stream)
                         .reduce((a, b) -> a + "," + b)
                         .orElse(null)
                 )
@@ -35,7 +38,9 @@ public class WineMapper {
     }
 
     public List<WineDTO> toWineDTOs(List<Wine> wineDTOs) {
-        return wineDTOs.stream()
+        return Optional.ofNullable(wineDTOs)
+                .stream()
+                .flatMap(List::stream)
                 .map(this::toWineDTO)
                 .toList();
     }

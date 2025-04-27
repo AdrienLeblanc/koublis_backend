@@ -21,7 +21,7 @@ public class WineController {
 
     @GetMapping
     @PreAuthorize("@guardService.isAuthentified(authentication)")
-    public List<WineDTO> getAllWines(
+    public List<WineDTO> findAllWines(
             @PathVariable(value = "cave-id") UUID caveId
     ) {
         return wineService.findAllByCaveId(caveId)
@@ -30,15 +30,15 @@ public class WineController {
                 .toList();
     }
 
-    @GetMapping("/{wineId}")
+    @GetMapping("/{wine-id}")
     @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO findWineById(
             @PathVariable(value = "cave-id") UUID caveId,
-            @PathVariable UUID wineId) {
+            @PathVariable(name = "wine-id") UUID wineId) {
         return wineMapper.toWineDTO(wineService.findByCaveIdAndWineId(caveId, wineId));
     }
 
-    @PutMapping
+    @PostMapping
     @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO createWine(
             @PathVariable(value = "cave-id") UUID caveId,
@@ -49,11 +49,11 @@ public class WineController {
         );
     }
 
-    @PostMapping("/{wineId}")
+    @PutMapping("/{wine-id}")
     @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO updateWine(
             @PathVariable(value = "cave-id") UUID caveId,
-            @PathVariable UUID wineId,
+            @PathVariable(name = "wine-id") UUID wineId,
             @Valid @RequestBody WineDTO wineRequest
     ) {
         return wineMapper.toWineDTO(
@@ -61,11 +61,11 @@ public class WineController {
         );
     }
 
-    @DeleteMapping("/{wineId}")
+    @DeleteMapping("/{wine-id}")
     @PreAuthorize("@guardService.isAuthentified(authentication)")
     public void deleteWine(
             @PathVariable(value = "cave-id") UUID caveId,
-            @PathVariable UUID wineId
+            @PathVariable(name = "wine-id") UUID wineId
     ) {
         wineService.deleteWine(caveId, wineId);
     }

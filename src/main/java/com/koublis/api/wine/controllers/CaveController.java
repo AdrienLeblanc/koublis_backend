@@ -20,7 +20,7 @@ public class CaveController {
 
     @GetMapping
     @PreAuthorize("@guardService.isAuthentified(authentication)")
-    public List<CaveDTO> getAllCaves() {
+    public List<CaveDTO> findAllCaves() {
         return caveService.findAll()
                 .stream()
                 .map(caveMapper::toCaveDTO)
@@ -29,7 +29,7 @@ public class CaveController {
 
     @GetMapping("/{cave-id}")
     @PreAuthorize("@guardService.isAuthentified(authentication)")
-    public CaveDTO getCave(@PathVariable(name = "cave-id") UUID caveId) {
+    public CaveDTO findCaveById(@PathVariable(name = "cave-id") UUID caveId) {
         return caveMapper.toCaveDTO(caveService.findCaveById(caveId));
     }
 
