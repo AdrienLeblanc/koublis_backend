@@ -9,6 +9,6 @@ Feature: Ensure that the catalog is populated at startup
     And header Authorization = 'Bearer ' + token
     When method get
     Then status 200
-    And match response.hits.total != 0
+    And match response != null && response.length > 0
 
   

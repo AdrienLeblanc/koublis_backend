@@ -26,7 +26,7 @@
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version>
         <jjwt.version>0.12.6</jjwt.version>
         <lombok.version>1.18.38</lombok.version>
-        <testcontainers.mysql.version>1.20.6</testcontainers.mysql.version>
+        <testcontainers.mysql.version>1.21.0</testcontainers.mysql.version>
         <karate-junit5.version>1.5.1</karate-junit5.version>
         <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
     </properties>
