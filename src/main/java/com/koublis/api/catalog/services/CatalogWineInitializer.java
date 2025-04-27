@@ -47,15 +47,14 @@ public class CatalogWineInitializer implements ApplicationRunner {
                 throw new TechnicalException(INVALID_JSON_FILE_START);
             }
 
-            var index = 1;
+            var index = 0;
             while (parser.nextToken() != JsonToken.END_ARRAY) {
                 val catalogWine = objectMapper.readValue(parser, CatalogWine.class);
-                
-                log.debug("Saving wine n°{} in catalog with name={}", index, catalogWine.getTitle());
+
+                log.debug("Saving wine n°{} in catalog with name={}", ++index, catalogWine.getTitle());
                 catalogWineRepository.save(catalogWine);
-                index++;
             }
-            
+
             log.info("Catalog populated with {} wines.", index);
 
         } catch (IOException ex) {
