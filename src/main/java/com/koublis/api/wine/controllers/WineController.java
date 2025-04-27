@@ -5,6 +5,7 @@ import com.koublis.api.wine.mappers.WineMapper;
 import com.koublis.api.wine.services.WineService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class WineController {
     private final WineMapper wineMapper;
 
     @GetMapping
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public List<WineDTO> getAllWines(
             @PathVariable(value = "cave-id") UUID caveId
     ) {
@@ -29,6 +31,7 @@ public class WineController {
     }
 
     @GetMapping("/{wineId}")
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO findWineById(
             @PathVariable(value = "cave-id") UUID caveId,
             @PathVariable UUID wineId) {
@@ -36,6 +39,7 @@ public class WineController {
     }
 
     @PutMapping
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO createWine(
             @PathVariable(value = "cave-id") UUID caveId,
             @Valid @RequestBody WineDTO wine
@@ -46,6 +50,7 @@ public class WineController {
     }
 
     @PostMapping("/{wineId}")
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public WineDTO updateWine(
             @PathVariable(value = "cave-id") UUID caveId,
             @PathVariable UUID wineId,
@@ -57,6 +62,7 @@ public class WineController {
     }
 
     @DeleteMapping("/{wineId}")
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public void deleteWine(
             @PathVariable(value = "cave-id") UUID caveId,
             @PathVariable UUID wineId

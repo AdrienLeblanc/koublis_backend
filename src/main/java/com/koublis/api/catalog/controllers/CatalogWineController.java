@@ -21,7 +21,7 @@ public class CatalogWineController {
     private final CatalogWineMapper catalogWineMapper;
 
     @GetMapping("/_search")
-    @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_MODERATOR') or hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("@guardService.isAuthentified(authentication)")
     public Page<CatalogWineDTO> searchCatalogWines(
             @RequestParam(required = false) String query,
             Pageable pageable
