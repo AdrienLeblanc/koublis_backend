@@ -19,6 +19,8 @@ spring:
     baseline-version: 0
 
 koublis:
+  catalog:
+    location: catalog/catalog.json
   security:
     jwtSecret: ${SECRET_KEY}
     jwtExpiration: 24h

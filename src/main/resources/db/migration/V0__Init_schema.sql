@@ -29,3 +29,22 @@ CREATE TABLE IF NOT EXISTS wines
     classification VARCHAR(50)  NULL,
     primeur        BOOLEAN      NULL
 );
+
+-- Create catalog_wines table
+CREATE TABLE IF NOT EXISTS catalog_wines
+(
+    id                      BINARY(16) PRIMARY KEY,
+    points                  INT             NULL,
+    title                   VARCHAR(255)    NULL,
+    description             LONGTEXT        NULL,
+    taster_name             VARCHAR(50)     NULL,
+    taster_twitter_handle   VARCHAR(50)     NULL,
+    price                   DECIMAL(10, 2)  NULL,
+    designation             VARCHAR(50)     NULL,
+    variety                 VARCHAR(50)     NULL,
+    region_1                VARCHAR(50)     NULL,
+    region_2                VARCHAR(50)     NULL,
+    province                VARCHAR(50)     NULL,
+    country                 VARCHAR(50)     NULL,
+    winery                  VARCHAR(50)     NULL
+);

@@ -1,0 +1,32 @@
+[
+  {
+    "points": 89,
+    "title": "Caymus 1998 Cabernet Sauvignon (Napa Valley)",
+    "description": "Creamy black cherry aromas layered with fresh brussel sprouts and spicy arugula flavors of red plums and toasted oak.",
+    "taster_name": null,
+    "taster_twitter_handle": null,
+    "price": 70,
+    "designation": null,
+    "variety": "Cabernet Sauvignon",
+    "region_1": "Napa Valley",
+    "region_2": "Napa",
+    "province": "California",
+    "country": "US",
+    "winery": "Caymus"
+  },
+  {
+    "points": 98,
+    "title": "M. Chapoutier 1999 Le Méal Ermitage  (Hermitage)",
+    "description": "Chapoutier's selections of the best parcels of vines in Hermitage are set to become legendary. Sold under the ancient spelling of the appellation name (Ermitage), they represent the epitome of the power and concentration that lies behind the reputation of the appellation. This cuvée is the best of the collection, with its brooding, opaque character, suggesting rather than revealing power at this stage. Age it until your new-born baby is old enough to drink, and it will be just about ready.",
+    "taster_name": "Roger Voss",
+    "taster_twitter_handle": "@vossroger",
+    "price": 150,
+    "designation": "Le Méal Ermitage",
+    "variety": "Rhône-style Red Blend",
+    "region_1": "Hermitage",
+    "region_2": null,
+    "province": "Rhône Valley",
+    "country": "France",
+    "winery": "M. Chapoutier"
+  }
+]

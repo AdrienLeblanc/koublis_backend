@@ -19,6 +19,8 @@ spring:
     baseline-version: 0
 
 koublis:
+  catalog:
+    location: catalog/catalog-test.json
   security:
     jwtSecret: j6F326G7UuS7wmIJ3Pca9vwV/s0QoIXImMsZMVG96cY=
     jwtExpiration: 1h
