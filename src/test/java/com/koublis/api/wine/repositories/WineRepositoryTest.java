@@ -37,7 +37,7 @@ class WineRepositoryTest extends AbstractSpringTest {
     }
 
     @Test
-    void should_save_wine_in_mongodb() {
+    void should_save_wine() {
         // Given
         val wine = Wine.builder()
                 .cave(cave)

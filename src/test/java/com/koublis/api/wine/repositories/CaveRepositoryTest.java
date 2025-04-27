@@ -26,7 +26,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
     }
 
     @Test
-    void should_save_cave_in_mongodb() {
+    void should_save_cave() {
         // Given
         val cave = Cave.builder()
                 .name("Test Cave")

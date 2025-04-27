@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,8 +22,11 @@ public class CatalogWineController {
 
     @GetMapping("/_search")
     @PreAuthorize("hasAuthority('ROLE_USER') or hasAuthority('ROLE_MODERATOR') or hasAuthority('ROLE_ADMIN')")
-    public Page<CatalogWineDTO> searchCatalogWines(Pageable pageable) {
-        return catalogWineService.searchCatalogWine(pageable)
+    public Page<CatalogWineDTO> searchCatalogWines(
+            @RequestParam(required = false) String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWine(query, pageable)
                 .map(catalogWineMapper::toCatalogWineDTO);
     }
 }
