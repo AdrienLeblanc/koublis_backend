@@ -6,7 +6,7 @@ spring:
     driver-class-name: # Set automatically by the test container
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:

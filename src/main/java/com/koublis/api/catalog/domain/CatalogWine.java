@@ -21,7 +21,7 @@ public class CatalogWine {
 
     @Id
     @UuidGenerator
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
+    @Column(name = "id")
     @JsonProperty("id")
     private UUID id;
     
@@ -33,7 +33,7 @@ public class CatalogWine {
     @JsonProperty("title")
     private String title;
     
-    @Column(name = "description", columnDefinition = "LONGTEXT")
+    @Column(name = "description")
     @JsonProperty("description")
     private String description;
     
