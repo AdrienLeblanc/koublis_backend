@@ -48,7 +48,7 @@ public class CatalogWineInitializer implements ApplicationRunner {
             }
 
             var index = 1;
-            while (parser.nextToken() != JsonToken.END_ARRAY && index <= 10) {
+            while (parser.nextToken() != JsonToken.END_ARRAY) {
                 val catalogWine = objectMapper.readValue(parser, CatalogWine.class);
                 
                 log.debug("Saving wine n°{} in catalog with name={}", index, catalogWine.getTitle());
