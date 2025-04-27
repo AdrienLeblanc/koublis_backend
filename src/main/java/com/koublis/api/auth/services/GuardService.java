@@ -15,18 +15,18 @@ import static com.koublis.api.auth.domain.Role.*;
 public class GuardService {
 
     public boolean isAuthentified(Authentication authentication) {
-        return hasOneOfRoles(authentication, ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN);
+        return hasAnyRole(authentication, ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN);
     }
 
     public boolean isModerator(Authentication authentication) {
-        return hasOneOfRoles(authentication, ROLE_MODERATOR, ROLE_ADMIN);
+        return hasAnyRole(authentication, ROLE_MODERATOR, ROLE_ADMIN);
     }
     
     public boolean isAdmin(Authentication authentication) {
-        return hasOneOfRoles(authentication, ROLE_ADMIN);
+        return hasAnyRole(authentication, ROLE_ADMIN);
     }
 
-    private static boolean hasOneOfRoles(Authentication authentication, Role... roles) {
+    private static boolean hasAnyRole(Authentication authentication, Role... roles) {
         return Optional.of(authentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getAuthorities)
