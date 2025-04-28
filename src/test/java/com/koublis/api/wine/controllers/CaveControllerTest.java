@@ -78,7 +78,7 @@ class CaveControllerTest extends AbstractControllerTest {
     }
     
     @Test
-    void should_return_200_create_cave() throws Exception {
+    void should_return_201_create_cave() throws Exception {
         // Given
         val caveId = UUID.randomUUID();
         when(caveService.createCave("Cave")).thenReturn(
@@ -91,7 +91,7 @@ class CaveControllerTest extends AbstractControllerTest {
         // When
         mockMvc.perform(post("/caves")
                         .param("cave-name", "Cave"))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(caveId.toString()))
                 .andExpect(jsonPath("$.name").value("Cave"));
@@ -124,13 +124,13 @@ class CaveControllerTest extends AbstractControllerTest {
     }
     
     @Test
-    void should_return_200_delete_cave() throws Exception {
+    void should_return_204_delete_cave() throws Exception {
         // Given
         val caveId = UUID.randomUUID();
 
         // When
         mockMvc.perform(delete("/caves/{cave-id}", caveId))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         // Then
         verify(caveService).deleteCave(caveId);

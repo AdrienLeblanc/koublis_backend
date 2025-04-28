@@ -47,12 +47,20 @@ public class WineService {
         val wineFound = this.findByCaveIdAndWineId(caveId, wineId);
 
         log.debug("Updating wine with id {} for cave with id {}. Body={}", wineId, caveId, wineRequest);
-        return wineRepository.save(
-                wineRequest.withId(wineFound.getId())
+        return wineRepository.save(wineFound
+                .withCount(wineRequest.getCount())
+                .withName(wineRequest.getName())
+                .withVintage(wineRequest.getVintage())
+                .withCountry(wineRequest.getCountry())
+                .withColor(wineRequest.getColor())
+                .withRegions(wineRequest.getRegions())
+                .withClassification(wineRequest.getClassification())
+                .withPrimeur(wineRequest.getPrimeur())
         );
     }
 
     public void deleteWine(UUID caveId, UUID wineId) {
+        log.debug("Deleting wine with id {} for cave with id {}", wineId, caveId);
         wineRepository.deleteByCaveIdAndId(caveId, wineId);
     }
 }

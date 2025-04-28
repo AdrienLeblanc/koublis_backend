@@ -84,7 +84,7 @@ class WineControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void should_return_200_create_wine() throws Exception {
+    void should_return_201_create_wine() throws Exception {
         // Given
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
@@ -105,7 +105,7 @@ class WineControllerTest extends AbstractControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(wineJson)
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(wineId.toString()))
                 .andExpect(jsonPath("$.name").value("Wine"));
@@ -153,14 +153,14 @@ class WineControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void should_return_200_delete_wine() throws Exception {
+    void should_return_204_delete_wine() throws Exception {
         // Given
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
 
         // When
         mockMvc.perform(delete("/caves/{cave-id}/wines/{wine-id}", caveId, wineId))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         // Then
         verify(wineService).deleteWine(caveId, wineId);

@@ -51,9 +51,4 @@ public class CaveService {
         log.debug("Deleting cave with id {}", caveId);
         caveRepository.deleteById(caveId);
     }
-
-    public void deleteAllCaves() {
-        log.debug("Deleting all caves");
-        caveRepository.deleteAll();
-    }
 }

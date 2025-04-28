@@ -7,7 +7,7 @@ import com.koublis.AbstractSpringIntegrationTest;
 class AdminRoleIntegrationTest extends AbstractSpringIntegrationTest {
 
     @Karate.Test
-    Karate testAdminRoleSecurity() {
+    Karate adminRoleSecurityIT() {
         return Karate.run().relativeTo(getClass());
     }
 

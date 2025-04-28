@@ -7,7 +7,7 @@ import com.koublis.AbstractSpringIntegrationTest;
 class AuthIntegrationTest extends AbstractSpringIntegrationTest {
 
     @Karate.Test
-    Karate testAuth() {
+    Karate authIT() {
         return Karate.run().relativeTo(getClass());
     }
 

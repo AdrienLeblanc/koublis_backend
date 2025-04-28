@@ -7,7 +7,7 @@ import com.koublis.AbstractSpringIntegrationTest;
 class UserRoleIntegrationTest extends AbstractSpringIntegrationTest {
 
     @Karate.Test
-    Karate testUserRoleSecurity() {
+    Karate userRoleSecurityIT() {
         return Karate.run().relativeTo(getClass());
     }
 
