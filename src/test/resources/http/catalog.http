@@ -1,0 +1,26 @@
+### Sign-up as a new user
+POST http://localhost:8080/auth/sign-up
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword",
+  "email": "testemail",
+  "role": "ROLE_USER"
+}
+###
+
+### Sign-up as a new user
+POST http://localhost:8080/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "testpassword"
+}
+###
+
+### Search through the catalog
+GET http://localhost:8080/catalog/wines/_search?query=juxtaposes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc0NzU4MTk0NywiZXhwIjoxNzQ3Njc1NTQ3fQ.XAXyT1rJsuXm4EWZ624yQ-B-lul5tpKy8MIQIyEYDYg

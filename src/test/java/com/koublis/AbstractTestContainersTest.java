@@ -23,8 +23,8 @@ public abstract class AbstractTestContainersTest {
     private static void startElasticsearchContainer() {
         elasticsearchContainer
                 .withEnv("xpack.security.enabled", "false")
-                .withEnv("xpack.security.transport.ssl.enabled", "false")
                 .withEnv("xpack.security.http.ssl.enabled", "false")
+                .withEnv("xpack.security.transport.ssl.enabled", "false")
                 .withEnv("xpack.ml.enabled", "false")
                 .start();
     }
