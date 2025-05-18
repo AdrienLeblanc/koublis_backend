@@ -20,7 +20,7 @@ public class CatalogWineController {
 
     @GetMapping("/_search")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public Page<CatalogWineDTO> searchCatalogWines(
             @RequestParam(required = false) String query,
             Pageable pageable

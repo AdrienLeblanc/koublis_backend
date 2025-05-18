@@ -1,4 +1,8 @@
 spring:
+  elasticsearch:
+    uris: # Set automatically by the test container
+    username: # Set automatically by the test container
+    password: # Set automatically by the test container
   datasource:
     url: # Set automatically by the test container
     username: # Set automatically by the test container

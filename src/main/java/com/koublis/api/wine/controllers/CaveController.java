@@ -21,7 +21,7 @@ public class CaveController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public List<CaveDTO> findAllCaves() {
         return caveService.findAll()
                 .stream()
@@ -31,14 +31,14 @@ public class CaveController {
 
     @GetMapping("/{cave-id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public CaveDTO findCaveById(@PathVariable(name = "cave-id") UUID caveId) {
         return caveMapper.toCaveDTO(caveService.findCaveById(caveId));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public CaveDTO createCave(@RequestParam(name = "cave-name") String caveName) {
         return caveMapper.toCaveDTO(
                 caveService.createCave(caveName)
@@ -47,7 +47,7 @@ public class CaveController {
 
     @PutMapping("/{cave-id}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public CaveDTO updateCave(
             @PathVariable(name = "cave-id") UUID caveId,
             @RequestParam(name = "cave-name") String caveName

@@ -39,7 +39,7 @@ class WineControllerTest extends AbstractControllerTest {
 
     @Test
     void should_return_200_find_all_wines() throws Exception {
-        // Given
+        // GIVEN
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
         when(wineService.findAllByCaveId(caveId)).thenReturn(List.of(
@@ -49,20 +49,20 @@ class WineControllerTest extends AbstractControllerTest {
                         .build()
         ));
 
-        // When
+        // WHEN
         mockMvc.perform(get("/caves/{cave-id}/wines", caveId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].id").value(wineId.toString()))
                 .andExpect(jsonPath("$.[0].name").value("Wine"));
 
-        // Then
+        // THEN
         verify(wineService).findAllByCaveId(caveId);
     }
 
     @Test
     void should_return_200_find_wine_by_id() throws Exception {
-        // Given
+        // GIVEN
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
         when(wineService.findByCaveIdAndWineId(caveId, wineId)).thenReturn(
@@ -72,20 +72,20 @@ class WineControllerTest extends AbstractControllerTest {
                         .build()
         );
 
-        // When
+        // WHEN
         mockMvc.perform(get("/caves/{cave-id}/wines/{wine-id}", caveId, wineId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(wineId.toString()))
                 .andExpect(jsonPath("$.name").value("Wine"));
 
-        // Then
+        // THEN
         verify(wineService).findByCaveIdAndWineId(caveId, wineId);
     }
 
     @Test
     void should_return_201_create_wine() throws Exception {
-        // Given
+        // GIVEN
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
         val wineJson = """
@@ -100,7 +100,7 @@ class WineControllerTest extends AbstractControllerTest {
                         .build()
         );
 
-        // When
+        // WHEN
         mockMvc.perform(post("/caves/{cave-id}/wines", caveId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(wineJson)
@@ -110,7 +110,7 @@ class WineControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.id").value(wineId.toString()))
                 .andExpect(jsonPath("$.name").value("Wine"));
 
-        // Then
+        // THEN
         val captor = ArgumentCaptor.forClass(Wine.class);
         verify(wineService).createWine(eq(caveId), captor.capture());
         assertThat(captor.getValue().getName()).isEqualTo("Wine");
@@ -118,7 +118,7 @@ class WineControllerTest extends AbstractControllerTest {
 
     @Test
     void should_return_200_update_wine() throws Exception {
-        // Given
+        // GIVEN
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
         val wineJson = """
@@ -135,7 +135,7 @@ class WineControllerTest extends AbstractControllerTest {
                         .build()
         );
 
-        // When
+        // WHEN
         mockMvc.perform(put("/caves/{cave-id}/wines/{wine-id}", caveId, wineId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(wineJson)
@@ -145,7 +145,7 @@ class WineControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.id").value(wineId.toString()))
                 .andExpect(jsonPath("$.name").value("Wine"));
 
-        // Then
+        // THEN
         val captor = ArgumentCaptor.forClass(Wine.class);
         verify(wineService).updateWine(eq(caveId), eq(wineId), captor.capture());
         assertThat(captor.getValue().getId()).isEqualTo(wineId);
@@ -154,15 +154,15 @@ class WineControllerTest extends AbstractControllerTest {
 
     @Test
     void should_return_204_delete_wine() throws Exception {
-        // Given
+        // GIVEN
         val caveId = UUID.randomUUID();
         val wineId = UUID.randomUUID();
 
-        // When
+        // WHEN
         mockMvc.perform(delete("/caves/{cave-id}/wines/{wine-id}", caveId, wineId))
                 .andExpect(status().isNoContent());
 
-        // Then
+        // THEN
         verify(wineService).deleteWine(caveId, wineId);
     }
 }

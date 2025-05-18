@@ -1,80 +1,56 @@
 package com.koublis.api.catalog.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+import lombok.Builder;
+import lombok.Getter;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.UUID;
-
-@Entity
-@Table(name = "catalog_wines")
-@With
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder(toBuilder = true)
+@Builder
+@Document(indexName = "catalog_wines")
 public class CatalogWine {
 
     @Id
-    @UuidGenerator
-    @Column(name = "id")
-    @JsonProperty("id")
-    private UUID id;
-    
-    @Column(name = "points")
-    @JsonProperty("points")
-    private Integer points;
-    
-    @Column(name = "title")
-    @JsonProperty("title")
-    private String title;
-    
-    @Column(name = "description")
-    @JsonProperty("description")
-    private String description;
-    
-    @Column(name = "taster_name")
-    @JsonProperty("taster_name")
-    private String tasterName;
-    
-    @Column(name = "taster_twitter_handle")
-    @JsonProperty("taster_twitter_handle")
-    private String tasterTwitterHandle;
-    
-    @Column(name = "price")
-    @JsonProperty("price")
-    private Integer price;
-    
-    @Column(name = "designation")
-    @JsonProperty("designation")
-    private String designation;
-    
-    @Column(name = "variety")
-    @JsonProperty("variety")
-    private String variety;
-    
-    @Column(name = "region_1")
-    @JsonProperty("region_1")
-    private String region1;
-    
-    @Column(name = "region_2")
-    @JsonProperty("region_2")
-    private String region2;
-    
-    @Column(name = "province")
-    @JsonProperty("province")
-    private String province;
-    
-    @Column(name = "country")
-    @JsonProperty("country")
-    private String country;
-    
-    @Column(name = "winery")
-    @JsonProperty("winery")
-    private String winery;
+    private String id;
 
+    @Field(type = FieldType.Integer)
+    private Integer points;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String title;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String description;
+
+    @Field(type = FieldType.Keyword)
+    private String tasterName;
+
+    @Field(type = FieldType.Keyword)
+    private String tasterTwitterHandle;
+
+    @Field(type = FieldType.Integer)
+    private Integer price;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String designation;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String variety;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String region1;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String region2;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String province;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String country;
+
+    @Field(type = FieldType.Text, analyzer = "standard")
+    private String winery;
 }

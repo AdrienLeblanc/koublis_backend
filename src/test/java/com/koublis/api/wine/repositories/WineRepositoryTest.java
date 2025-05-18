@@ -38,16 +38,16 @@ class WineRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_save_wine() {
-        // Given
+        // GIVEN
         val wine = Wine.builder()
                 .cave(cave)
                 .name("Test Wine")
                 .build();
 
-        // When
+        // WHEN
         val savedWine = wineRepository.save(wine);
 
-        // Then
+        // THEN
         assertThat(savedWine.getId()).isNotNull();
         assertThat(savedWine.getId().version()).isEqualTo(4);
         assertThat(savedWine.getName()).isEqualTo(wine.getName());
@@ -55,17 +55,17 @@ class WineRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_find_wine_by_id() {
-        // Given
+        // GIVEN
         val wine = Wine.builder()
                 .cave(cave)
                 .name("Test Wine")
                 .build();
         val savedWine = wineRepository.save(wine);
 
-        // When
+        // WHEN
         val wineFound = wineRepository.findById(savedWine.getId()).orElse(null);
 
-        // Then
+        // THEN
         assertThat(wineFound).isNotNull();
         assertThat(wineFound.getId()).isEqualTo(savedWine.getId());
         assertThat(wineFound.getName()).isEqualTo(savedWine.getName());
@@ -73,15 +73,15 @@ class WineRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_fail_to_save_wine_without_cave() {
-        // Given
+        // GIVEN
         val wine = Wine.builder()
                 .name("Test Wine")
                 .build();
 
-        // When
+        // WHEN
         val exception = assertThatThrownBy(() -> wineRepository.save(wine));
 
-        // Then
+        // THEN
         exception.isInstanceOf(DataIntegrityViolationException.class);
     }
 

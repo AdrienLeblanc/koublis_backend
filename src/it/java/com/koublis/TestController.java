@@ -17,7 +17,7 @@ public class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("@guardService.isAuthentified(authentication)")
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
     public String userAccess() {
         return "User Content.";
     }

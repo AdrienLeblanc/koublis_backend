@@ -3,7 +3,7 @@ package com.koublis.api.catalog.services;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koublis.api.catalog.domain.CatalogWine;
-import com.koublis.api.catalog.repositories.CatalogWineRepository;
+import com.koublis.api.catalog.repositories.ECatalogWineRepository;
 import com.koublis.configuration.catalog.CatalogPropertiesConfiguration;
 import com.koublis.configuration.exceptions.TechnicalException;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +25,17 @@ import static com.koublis.configuration.exceptions.Reason.*;
 public class CatalogWineInitializer implements ApplicationRunner {
 
     private final ObjectMapper objectMapper;
-    private final CatalogWineRepository catalogWineRepository;
+    private final ECatalogWineRepository eCatalogWineRepository;
     private final CatalogPropertiesConfiguration catalogPropertiesConfiguration;
+    private final ElasticsearchECatalogWineService elasticsearchECatalogWineService;
 
     @Override
     public void run(ApplicationArguments args) {
-        populateCatalog();
+        populateCatalogWines();
     }
 
-    private void populateCatalog() {
-        if (catalogWineRepository.count() > 0) {
+    private void populateCatalogWines() {
+        if (eCatalogWineRepository.count() > 0) {
             log.info("Catalog has already been populated, skipping initialization.");
             return;
         }
@@ -52,13 +53,15 @@ public class CatalogWineInitializer implements ApplicationRunner {
                 val catalogWine = objectMapper.readValue(parser, CatalogWine.class);
 
                 log.debug("Saving wine n°{} in catalog with name={}", ++index, catalogWine.getTitle());
-                catalogWineRepository.save(catalogWine);
+                eCatalogWineRepository.save(catalogWine);
             }
 
             log.info("Catalog populated with {} wines.", index);
 
         } catch (IOException ex) {
             throw new TechnicalException(FAILED_TO_PARSE_CATALOG_WINES, ex);
+        } finally {
+            elasticsearchECatalogWineService.reindex();
         }
 
     }

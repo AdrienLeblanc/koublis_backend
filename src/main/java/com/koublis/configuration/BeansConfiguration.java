@@ -9,7 +9,7 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS
 
 @Configuration
 public class BeansConfiguration {
-    
+
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()

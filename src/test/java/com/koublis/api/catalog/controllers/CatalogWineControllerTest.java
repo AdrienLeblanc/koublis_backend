@@ -16,7 +16,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,19 +40,17 @@ class CatalogWineControllerTest extends AbstractControllerTest {
     
     @Test
     void should_return_200_search_catalog_wines() throws Exception {
-        // Given
+        // GIVEN
         val query = "example";
-        val catalogWineId = UUID.randomUUID();
         when(catalogWineService.searchCatalogWines(any(), any())).thenReturn(
                 new PageImpl<>(
                         List.of(CatalogWine.builder()
-                                        .id(catalogWineId)
                                         .title("Catalog Wine")
                                 .build())
                 )
         );
 
-        // When
+        // WHEN
         mockMvc.perform(get("/catalog/wines/_search")
                         .param("query", query)
                         .param("page", "3")
@@ -67,7 +64,7 @@ class CatalogWineControllerTest extends AbstractControllerTest {
                 .andExpect(jsonPath("$.content").isArray())
                 .andExpect(jsonPath("$.content[0].title").value("Catalog Wine"));
         
-        // Then
+        // THEN
         val captor = ArgumentCaptor.forClass(Pageable.class);
         verify(catalogWineService).searchCatalogWines(eq(query), captor.capture());
         assertThat(captor.getValue().getPageNumber()).isEqualTo(3);

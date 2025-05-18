@@ -1,4 +1,8 @@
 spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: changeme
   datasource:
     url: jdbc:mysql://localhost:3306/koublis?sslMode=PREFERRED
     username: celld

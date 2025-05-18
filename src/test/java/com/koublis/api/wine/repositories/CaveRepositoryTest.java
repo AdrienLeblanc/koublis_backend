@@ -27,15 +27,15 @@ class CaveRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_save_cave() {
-        // Given
+        // GIVEN
         val cave = Cave.builder()
                 .name("Test Cave")
                 .build();
 
-        // When
+        // WHEN
         val savedCave = caveRepository.save(cave);
 
-        // Then
+        // THEN
         assertThat(savedCave.getId()).isNotNull();
         assertThat(savedCave.getId().version()).isEqualTo(4);
         assertThat(savedCave.getName()).isEqualTo(cave.getName());
@@ -43,16 +43,16 @@ class CaveRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_find_cave_by_id() {
-        // Given
+        // GIVEN
         val cave = Cave.builder()
                 .name("Test Cave")
                 .build();
         val savedCave = caveRepository.save(cave);
 
-        // When
+        // WHEN
         val foundCave = caveRepository.findById(savedCave.getId()).orElse(null);
 
-        // Then
+        // THEN
         assertThat(foundCave).isNotNull();
         assertThat(foundCave.getId()).isEqualTo(savedCave.getId());
         assertThat(foundCave.getName()).isEqualTo(savedCave.getName());
@@ -60,7 +60,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
 
     @Test
     void should_save_cave_with_wines() {
-        // Given
+        // GIVEN
 
         val cave = Cave.builder()
                 .name("Test Cave")
@@ -78,7 +78,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
                 .name("Wine2")
                 .build();
 
-        // When
+        // WHEN
         caveRepository.save(
                 savedCave.withWines(List.of(wine1, wine2))
         );
@@ -86,7 +86,7 @@ class CaveRepositoryTest extends AbstractSpringTest {
         val caveFound = caveRepository.findById(savedCave.getId()).orElse(null);
         val winesFound = wineRepository.findAllByCaveId(savedCave.getId());
 
-        // Then
+        // THEN
         assertThat(savedCave.getId()).isNotNull();
         assertThat(savedCave.getName()).isEqualTo(cave.getName());
 

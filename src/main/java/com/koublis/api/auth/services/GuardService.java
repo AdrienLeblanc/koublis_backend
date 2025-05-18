@@ -14,7 +14,7 @@ import static com.koublis.api.auth.domain.Role.*;
 @Service("guardService")
 public class GuardService {
 
-    public boolean isAuthentified(Authentication authentication) {
+    public boolean isAuthenticated(Authentication authentication) {
         return hasAnyRole(authentication, ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN);
     }
 
