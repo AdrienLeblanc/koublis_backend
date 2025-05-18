@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import static com.koublis.configuration.exceptions.Reason.*;
 
@@ -28,6 +29,8 @@ public class CatalogWineInitializer implements ApplicationRunner {
     private final ECatalogWineRepository eCatalogWineRepository;
     private final CatalogPropertiesConfiguration catalogPropertiesConfiguration;
     private final ElasticsearchECatalogWineService elasticsearchECatalogWineService;
+
+    private static final int BATCH_SIZE = 1000;
 
     @Override
     public void run(ApplicationArguments args) {
@@ -48,22 +51,33 @@ public class CatalogWineInitializer implements ApplicationRunner {
                 throw new TechnicalException(INVALID_JSON_FILE_START);
             }
 
-            var index = 0;
+            val batch = new ArrayList<CatalogWine>(BATCH_SIZE);
+            var totalCount = 0;
+
             while (parser.nextToken() != JsonToken.END_ARRAY) {
                 val catalogWine = objectMapper.readValue(parser, CatalogWine.class);
+                batch.add(catalogWine);
+                totalCount++;
 
-                log.debug("Saving wine n°{} in catalog with name={}", ++index, catalogWine.getTitle());
-                eCatalogWineRepository.save(catalogWine);
+                if (batch.size() >= BATCH_SIZE || parser.currentToken() == JsonToken.END_ARRAY) {
+                    log.debug("Saving batch of {} wines (total processed: {})", batch.size(), totalCount);
+                    eCatalogWineRepository.saveAll(batch);
+                    batch.clear();
+                }
             }
 
-            log.info("Catalog populated with {} wines.", index);
+            if (!batch.isEmpty()) {
+                log.debug("Saving final batch of {} wines", batch.size());
+                eCatalogWineRepository.saveAll(batch);
+            }
+
+            log.info("Catalog populated with {} wines.", totalCount);
 
         } catch (IOException ex) {
             throw new TechnicalException(FAILED_TO_PARSE_CATALOG_WINES, ex);
         } finally {
             elasticsearchECatalogWineService.reindex();
         }
-
     }
 
     private InputStream getInputStream() {
