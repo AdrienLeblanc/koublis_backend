@@ -3,7 +3,7 @@ package com.koublis.api.catalog.services;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koublis.api.catalog.domain.CatalogWine;
-import com.koublis.api.catalog.repositories.ECatalogWineRepository;
+import com.koublis.api.catalog.repositories.CatalogWineRepository;
 import com.koublis.configuration.catalog.CatalogPropertiesConfiguration;
 import com.koublis.configuration.exceptions.TechnicalException;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +26,9 @@ import static com.koublis.configuration.exceptions.Reason.*;
 public class CatalogWineInitializer implements ApplicationRunner {
 
     private final ObjectMapper objectMapper;
-    private final ECatalogWineRepository eCatalogWineRepository;
+    private final CatalogWineRepository catalogWineRepository;
     private final CatalogPropertiesConfiguration catalogPropertiesConfiguration;
-    private final ElasticsearchECatalogWineService elasticsearchECatalogWineService;
+    private final ElasticsearchCatalogWineService elasticsearchCatalogWineService;
 
     private static final int BATCH_SIZE = 1000;
 
@@ -38,7 +38,7 @@ public class CatalogWineInitializer implements ApplicationRunner {
     }
 
     private void populateCatalogWines() {
-        if (eCatalogWineRepository.count() > 0) {
+        if (catalogWineRepository.count() > 0) {
             log.info("Catalog has already been populated, skipping initialization.");
             return;
         }
@@ -61,14 +61,14 @@ public class CatalogWineInitializer implements ApplicationRunner {
 
                 if (batch.size() >= BATCH_SIZE || parser.currentToken() == JsonToken.END_ARRAY) {
                     log.debug("Saving batch of {} wines (total processed: {})", batch.size(), totalCount);
-                    eCatalogWineRepository.saveAll(batch);
+                    catalogWineRepository.saveAll(batch);
                     batch.clear();
                 }
             }
 
             if (!batch.isEmpty()) {
                 log.debug("Saving final batch of {} wines", batch.size());
-                eCatalogWineRepository.saveAll(batch);
+                catalogWineRepository.saveAll(batch);
             }
 
             log.info("Catalog populated with {} wines.", totalCount);
@@ -76,7 +76,7 @@ public class CatalogWineInitializer implements ApplicationRunner {
         } catch (IOException ex) {
             throw new TechnicalException(FAILED_TO_PARSE_CATALOG_WINES, ex);
         } finally {
-            elasticsearchECatalogWineService.reindex();
+            elasticsearchCatalogWineService.reindex();
         }
     }
 

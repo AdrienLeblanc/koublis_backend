@@ -5,5 +5,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ECatalogWineRepository extends ElasticsearchRepository<CatalogWine, String> {
+public interface CatalogWineRepository extends ElasticsearchRepository<CatalogWine, String> {
 }

@@ -6,9 +6,9 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ElasticsearchECatalogWineService extends ElasticsearchIndexer<CatalogWine> {
+public class ElasticsearchCatalogWineService extends ElasticsearchIndexer<CatalogWine> {
 
-    public ElasticsearchECatalogWineService(final ElasticsearchOperations elasticsearchOperations) {
+    public ElasticsearchCatalogWineService(final ElasticsearchOperations elasticsearchOperations) {
         super(elasticsearchOperations, CatalogWine.class);
     }
 

@@ -28,4 +28,81 @@ public class CatalogWineController {
         return catalogWineService.searchCatalogWines(query, pageable)
                 .map(catalogWineMapper::toCatalogWineDTO);
     }
+
+    @GetMapping("/_search/title")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByTitle(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByTitle(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/tasterName")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByTasterName(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByTasterName(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/designation")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByDesignation(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByDesignation(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/variety")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByVariety(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByVariety(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/province")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByProvince(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByProvince(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/country")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByCountry(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByCountry(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
+
+    @GetMapping("/_search/winery")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@guardService.isAuthenticated(authentication)")
+    public Page<CatalogWineDTO> searchCatalogWinesByWinery(
+            @RequestParam(value = "q") String query,
+            Pageable pageable
+    ) {
+        return catalogWineService.searchCatalogWinesByWinery(query, pageable)
+                .map(catalogWineMapper::toCatalogWineDTO);
+    }
 }
